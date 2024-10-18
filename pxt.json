@@ -1,6 +1,7 @@
 {
     "name": "pxt-sumobit",
-    "description": "",
+    "description": "MakeCode Extension for Cytron SUMO:BIT",
+    "license": "MIT",
     "dependencies": {
         "core": "*",
         "radio": "*",
@@ -21,6 +22,7 @@
     "testFiles": [
         "test.ts"
     ],
+    "public": true,
     "targetVersions": {
         "target": "7.0.51",
         "targetId": "microbit"
