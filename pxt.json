@@ -7,9 +7,16 @@
         "microphone": "*"
     },
     "files": [
-        "main.blocks",
         "main.ts",
-        "README.md"
+        "README.md",
+        "motor.ts",
+        "opponent.ts",
+        "edge.ts",
+        "mode.ts",
+        "motorcurrent.ts",
+        "servo.ts",
+        "battery.ts",
+        "rgb.ts"
     ],
     "testFiles": [
         "test.ts"
@@ -21,5 +28,5 @@
     "supportedTargets": [
         "microbit"
     ],
-    "preferredEditor": "blocksprj"
+    "preferredEditor": "tsprj"
 }
