@@ -40,6 +40,12 @@ const REG_VIN_R2 = 34;
 const REG_ADD_DIP = 35;
 const REG_ADD_RESET = 36;
 
+pins.setPull(DigitalPin.P16, PinPullMode.PullUp)
+pins.setPull(DigitalPin.P15, PinPullMode.PullUp)
+pins.setPull(DigitalPin.P14, PinPullMode.PullUp)
+pins.setPull(DigitalPin.P13, PinPullMode.PullUp)
+pins.setPull(DigitalPin.P12, PinPullMode.PullUp)
+
 
 
 /**
