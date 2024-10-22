@@ -1,7 +1,11 @@
-// I2C Adress
+/**
+ * Board initialization and helper function.
+ */
+
+// I2C slave address for RP2040
 const I2C_ADDRESS = 0x09;
 
-// Register addresses.
+// I2C register addresses
 const REG_ADD_REVISION = 0;
 const REG_ADD_SRV1_POS = 1;
 const REG_ADD_SRV1_SPEED = 2;
@@ -40,12 +44,12 @@ const REG_VIN_R2 = 34;
 const REG_ADD_DIP = 35;
 const REG_ADD_RESET = 36;
 
+// Software pullup for the opponent sensors
 pins.setPull(DigitalPin.P16, PinPullMode.PullUp)
 pins.setPull(DigitalPin.P15, PinPullMode.PullUp)
 pins.setPull(DigitalPin.P14, PinPullMode.PullUp)
 pins.setPull(DigitalPin.P13, PinPullMode.PullUp)
 pins.setPull(DigitalPin.P12, PinPullMode.PullUp)
-
 
 
 /**
@@ -56,7 +60,7 @@ pins.setPull(DigitalPin.P12, PinPullMode.PullUp)
 //% groups=['DC Motors', 'Servos' , 'Mode', 'Motor Current','Opponent Sensors' , 'Edge Sensors', 'RGB LED']
 namespace sumobit {
     
-    // Stop all motor at start 
+    // Stop all motor. 
     brakeMotor(MotorChannel.MR);
     brakeMotor(MotorChannel.ML);
 

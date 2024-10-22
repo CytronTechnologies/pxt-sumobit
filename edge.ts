@@ -37,24 +37,24 @@ enum EdgeCompareType {
 namespace sumobit {
 
     /**
-      * Return the right edge sensor value (0-1023).
+      * Read the right edge sensor value (0-1023).
       */
     //% group="Edge Sensors"
     //% weight=79
     //% blockGap=8
-    //% blockId=sumobit_read_edge_R_value
+    //% blockId=sumobit_edge_read_value_right
     //% block="right edge sensor"
     export function readEdgeRValue(): number {
         return pins.analogReadPin(EDGE_R_PIN);
     }
 
     /**
-      * Return the left edge sensor value (0-1023).
+      * Read the left edge sensor value (0-1023).
       */
     //% group="Edge Sensors"
     //% weight=78
     //% blockGap=8
-    //% blockId=sumobit_read_edge_L_value
+    //% blockId=sumobit_edge_read_value_left
     //% block="left edge sensor"
     export function readEdgeLValue(): number {
         return pins.analogReadPin(EDGE_L_PIN);
@@ -70,7 +70,7 @@ namespace sumobit {
     //% group="Edge Sensors"
     //% weight=77
     //% blockGap=40
-    //% blockId=sumobit_compare_edge_value
+    //% blockId=sumobit_edge_compare_value
     //% block="%side edge sensor %compareType %threshold"
     //% threshold.min=0 threshold.max=1023
     export function compareEdge(side: EdgeSide, compareType: EdgeCompareType, threshold: number,): boolean {

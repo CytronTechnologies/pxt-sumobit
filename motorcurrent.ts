@@ -41,7 +41,6 @@ enum CompareType {
 
 namespace sumobit {
 
-    // 
     let bgFunctionCreated = false;
 
     // Event type.
@@ -57,12 +56,12 @@ namespace sumobit {
 
 
     /**
-     * Return Right Motor current value.
+     * Read the right motor current value (2 d.p.).
      */
     //% group="Motor Current"
     //% weight=59
     //% blockGap=8
-    //% blockId=sumobit_read_m1_current_value
+    //% blockId=sumobit_current_read_m1
     //% block="right motor current"
     export function readM1CurrentValue(): number {
         let highByte: number;
@@ -73,12 +72,12 @@ namespace sumobit {
     }
 
     /**
-     * Return motor 2 current value.
+     * Read the left motor current value (2 d.p.).
      */
     //% group="Motor Current"
     //% weight=58
     //% blockGap=8
-    //% blockId=sumobit_read_m2_current_value
+    //% blockId=sumobit_current_read_m2
     //% block="left motor current"
     export function readM2CurrentValue(): number {
         let highByte: number;
@@ -91,13 +90,13 @@ namespace sumobit {
 
 
     /**
-    * Compare the motor current value (0.00-20.00) and returns the result (true/false).
+    * Compare the motor current value (0.00-20.00) with a threshold value and returns the result (true/false).
     * @param threshold The current DIP position. eg: 14.00
     */
     //% group="Motor Current"
     //% weight=57
     //% blockGap=40
-    //% blockId=sumobit_compare_current_value
+    //% blockId=sumobit_current_compare_value
     //% block="%motor current %compareType %threshold"
     //% threshold.min=0.00 threshold.max=15.00 REG_ADD_AN1_HIGH
     //% blockHidden=true
@@ -132,7 +131,7 @@ namespace sumobit {
 
 
     /**
-    * Compare the motor current value with a certain value and do something when true.
+    * Compare the motor current value with a threshold value and do something when true.
     * @param motor M1, M2 or Both.
     * @param compareType More than or less than.
     * @param threshold The value to compare with. eg: 7.00
@@ -141,7 +140,7 @@ namespace sumobit {
     //% group="Motor Current"
     //% weight=56
     //% blockGap=40
-    //% blockId=sumobit_motorcurrent_event
+    //% blockId=sumobit_current_event
     //% block="on %motor current %compareType %threshold"
     //% threshold.min=0.00 threshold.max=15.00
     export function onEvent(motor: CompareSelect, compareType: CompareType, threshold: number, handler: Action): void {

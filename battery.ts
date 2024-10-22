@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Functions for SUMO:BIT battery input
+ * Function for SUMO:BIT battery input
  *
  * Company: Cytron Technologies Sdn Bhd
  * Website: http://www.cytron.io
@@ -9,12 +9,12 @@
 namespace sumobit {
 
     /**
-    * Return the current battery voltage.
+    * Read the current battery voltage (2 d.p.).
     */
     //% group="Battery"
     //% weight=49
     //% blockGap=8
-    //% blockId=sumobit_read_VIN
+    //% blockId=sumobit_battery_read
     //% block="battery voltage"
     export function readBatteryValue(): number {
         let highByte: number;

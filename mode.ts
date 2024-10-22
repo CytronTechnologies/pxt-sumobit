@@ -22,12 +22,12 @@ namespace sumobit {
 
 
     /**
-     * Return the current mode number(0-15).
+     * Read the current mode number(0-15).
      */
     //% group="Mode"
     //% weight=69
     //% blockGap=8
-    //% blockId=sumobit_read_mode_value
+    //% blockId=sumobit_mode_read_value
     //% block="mode"
     export function readModeValue(): number {
         return sumobit.i2cRead(REG_ADD_DIP);
@@ -40,7 +40,7 @@ namespace sumobit {
     //% group="Mode"
     //% weight=68
     //% blockGap=40
-    //% blockId=sumobit_check_mode_value
+    //% blockId=sumobit_mode_compare_value
     //% block="mode %modevalue"
     //% modevalue.min=0 modevalue.max=15
     export function checkMode(modevalue: number): boolean {

@@ -34,14 +34,13 @@ enum RgbColors {
 
 namespace sumobit {
 
-
     /**
      * Turn off all RGB pixels.
      */
     //% group="RGB LED"
     //% weight=29
     //% blockGap=8
-    //% blockId="sumobit_clear_all_rgb_pixels"
+    //% blockId="sumobit_rgb_clear_all_pixels"
     //% block="clear all RGB pixels"
     export function clearAllRgbPixels(): void {
 
@@ -63,7 +62,7 @@ namespace sumobit {
     //% group="RGB LED"
     //% weight=28
     //% blockGap=40
-    //% blockId="sumobit_set_rgb_brightness"
+    //% blockId="sumobit_rgb_set_brightness"
     //% block="set RGB pixels brightness to %brightness"
     //% brightness.min=0 brightness.max=255
     //% blockHidden=true
@@ -73,13 +72,13 @@ namespace sumobit {
 
 
     /**
-     * Show the same color on all RGB pixels. 
+     * Set all RGB pixels to the specified color.
      * @param color RGB color of the pixel.
      */
     //% group="RGB LED"
     //% weight=27
     //% blockGap=8
-    //% blockId="sumobit_set_all_rgb_pixels_color"
+    //% blockId="sumobit_rgb_set_all_pixels_color"
     //% block="set all RGB pixels to %color"
     //% color.shadow="colorNumberPicker"
 
@@ -102,14 +101,14 @@ namespace sumobit {
 
 
     /**
-     * Show color on individual RGB pixel.
+     * Set the color of an individual RGB pixel.
      * @param pixel The pixel number we want to change the color. 
      * @param color RGB color of the pixel.
      */
     //% group="RGB LED"
     //% weight=26
     //% blockGap=40
-    //% blockId="sumobit_set_rgb_pixel_color"
+    //% blockId="sumobit_rgb_set_each_pixel_color"
     //% block="set RGB pixel %pixel to %color"
     //% color.shadow="colorNumberPicker"
     //% pixel.min=0 pixel.max=1
@@ -152,12 +151,12 @@ namespace sumobit {
 
 
     /**
-     * Return the RGB value of a known color.
+    * Get the RGB value for a specified known color.
     */
     //% group="RGB LED"
     //% weight=25
     //% blockGap=8
-    //% blockId="sumobit_colors"
+    //% blockId="sumobit_rgb_colors"
     //% block="%color"
     //% blockHidden=true
     export function colors(color: RgbColors): number {
@@ -166,7 +165,7 @@ namespace sumobit {
 
 
     /**
-     * Converts red, green, blue channels into a RGB color.
+     *  Convert the specified red, green, and blue channel values into an RGB color value.
      * @param red Value of the red channel (0 - 255). eg: 255
      * @param green Value of the green channel (0 - 255). eg: 255
      * @param blue Value of the blue channel (0 - 255). eg: 255
@@ -174,7 +173,7 @@ namespace sumobit {
     //% group="RGB LED"
     //% weight=24
     //% blockGap=30
-    //% blockId="sumobit_rgb_value"
+    //% blockId="sumobit_rgb_convert_value"
     //% block="red %red green %green blue %blue"
     //% red.min=0 red.max=255
     //% green.min=0 green.max=255

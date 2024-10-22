@@ -6,7 +6,25 @@
  * Email:   support@cytron.io
  *******************************************************************************/
 
-enum SensorPosition {
+
+enum SensorSelection1 {
+    //% block="left"
+    Left2 = 0,
+
+    //% block="front left"
+    Left1 = 1,
+
+    //% block="front center"
+    Center = 2,
+
+    //% block="front right"
+    Right1 = 3,
+
+    //% block="right"
+    Right2 = 4,
+}
+
+enum SensorSelection2 {
     //% block="left"
     Left2 = 0,
 
@@ -29,27 +47,6 @@ enum SensorPosition {
     None = 6
 }
 
-enum Sensor {
-    //% block="left"
-    Left2 = 0,
-
-    //% block="front left"
-    Left1 = 1,
-
-    //% block="front center"
-    Center = 2,
-
-    //% block="front right"
-    Right1 = 3,
-
-    //% block="right"
-    Right2 = 4,
-}
-
-
-
-
-
 namespace sumobit {
 
     /**
@@ -60,18 +57,18 @@ namespace sumobit {
     //% blockGap=8
     //% blockId=sumobit_maker_object_read_digital
     //% block="%sensor Opponent sensor"
-    export function OppSensorValue(sensor: Sensor): number {
+    export function OppSensorValue(sensor: SensorSelection1): number {
 
         switch (sensor) {
-            case Sensor.Left2:
+            case SensorSelection1.Left2:
                 return pins.digitalReadPin(DigitalPin.P16);
-            case Sensor.Left1:
+            case SensorSelection1.Left1:
                 return pins.digitalReadPin(DigitalPin.P15);;
-            case Sensor.Center:
+            case SensorSelection1.Center:
                 return pins.digitalReadPin(DigitalPin.P14);
-            case Sensor.Right1:
+            case SensorSelection1.Right1:
                 return pins.digitalReadPin(DigitalPin.P13);
-            case Sensor.Right2:
+            case SensorSelection1.Right2:
                 return pins.digitalReadPin(DigitalPin.P12);
 
         }
@@ -87,7 +84,7 @@ namespace sumobit {
     //% blockId=sumobit_maker_object_detect_opponent
     //% block="%position sensor detect opponent"
     //% position.fieldEditor="gridpicker" position.fieldOptions.columns=5
-    export function OppSensorDetection(position: SensorPosition): boolean {
+    export function OppSensorDetection(position: SensorSelection2): boolean {
 
 
 
@@ -98,37 +95,37 @@ namespace sumobit {
         let R = OppSensorValue(4);
 
         switch (position) {
-            case SensorPosition.None:
+            case SensorSelection2.None:
                 if (L == 1 && FL == 1 && FC == 1 && FR == 1 && R == 1)
                     return true;
                 else return false;
 
-            case SensorPosition.Left2:
+            case SensorSelection2.Left2:
                 if (L == 0 && FL == 1 && FC == 1 && FR == 1 && R == 1)
                     return true;
                 else return false;
 
-            case SensorPosition.Left1:
+            case SensorSelection2.Left1:
                 if (L == 1 && FL == 0 && FC == 1 && FR == 1 && R == 1)
                     return true;
                 else return false;
 
-            case SensorPosition.Center:
+            case SensorSelection2.Center:
                 if (L == 1 && FL == 1 && FC == 0 && FR == 1 && R == 1)
                     return true;
                 else return false;
 
-            case SensorPosition.Right1:
+            case SensorSelection2.Right1:
                 if (L == 1 && FL == 1 && FC == 1 && FR == 0 && R == 1)
                     return true;
                 else return false;
 
-            case SensorPosition.Right2:
+            case SensorSelection2.Right2:
                 if (L == 1 && FL == 1 && FC == 1 && FR == 1 && R == 0)
                     return true;
                 else return false;
 
-            case SensorPosition.All:
+            case SensorSelection2.All:
                 if (L == 0 && FL == 0 && FC == 0 && FR == 0 && R == 0)
                     return true;
                 else return false;
@@ -138,15 +135,18 @@ namespace sumobit {
     }
 
     /**
-    * Opp sensor combination
+    * Compare the toggle values with the current sensor states.
+    * Returns true if ALL match. (LOW = obstacle detacted).
     */
     //% group="Opponent Sensors"
     //% weight=87
+    //% blockId=sumobit_maker_object_compare_expected_with_sensor
     //% block="L$TogL FL$TogFL FC$TogFC FR$TogFR R$TogR"
     //% TogL.shadow="toggleHighLow" TogFL.shadow="toggleHighLow" TogFC.shadow="toggleHighLow" TogFR.shadow="toggleHighLow" TogR.shadow="toggleHighLow"
     //% inlineInputMode=inline
     export function OppSensorCombinationBoolean(TogL: boolean, TogFL: boolean, TogFC: boolean, TogFR: boolean, TogR: boolean): boolean {
     let sensorValues = [
+
         OppSensorValue(0), // L
         OppSensorValue(1), // FL
         OppSensorValue(2), // FC

@@ -35,12 +35,12 @@ export enum MotorChannel {
 
     /**
      * Stop motor
-     * @param motor Motorchannel eg: Motor.M1, Motor.M2
+     * @param motor Motorchannel eg: Motor.M1
      */
     //% group="DC Motors"
     //% weight=98
     //% blockGap=8
-    //% blockId=sumobit_brake_motor
+    //% blockId=sumobit_motor_brake
     //% block="brake motor %motor"
     export function brakeMotor(motor: MotorChannel): void {
         switch (motor) {
@@ -65,16 +65,17 @@ export enum MotorChannel {
 
 
     /**
-     * Run the motor forward or backward (Speed = 0-255).
+     * Run the motor forward or backward.
+     * (Speed = 0-255) (Acceleration = 0-9).
      * @param motor Motor channel.
      * @param direction Motor direction.
-     * @param speed Motor speed (0-255). eg: 128
+     * @param speed Motor speed (PWM). eg: 128
      * @param accelaration Acceleration factor (0-9). eg: 0
      */
     //% group="DC Motors"
     //% weight=99
     //% blockGap=8
-    //% blockId=sumobit_run_motor
+    //% blockId=sumobit_motor_run
     //% accel.fieldOptions.label="Acceleration Factor"
     //% block="run %motor motor %direction at %speed speed || with %accelaration acceleration factor"
     //% inlineInputMode=inline

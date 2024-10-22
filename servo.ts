@@ -18,13 +18,13 @@ enum ServoChannel {
 namespace sumobit{
 
     /**
-         * Disable the servo.
-         * @param servo Servo channel.
-         */
+     * Disable the servo.
+     * @param servo Servo channel.
+     */
     //% group="Servos"
     //% weight=38
     //% blockGap=8
-    //% blockId=sumobit_disable_servo
+    //% blockId=sumobit_servo_disable
     //% block="disable servo %servo"
     export function disableServo(servo: ServoChannel): void {
         if (servo == ServoChannel.All) {
@@ -45,13 +45,12 @@ namespace sumobit{
     //% group="Servos"
     //% weight=39
     //% blockGap=8
-    //% blockId=sumobit_set_servo_position
+    //% blockId=sumobit_servo_set_position
     //% block="set servo %servo position to %position degrees"
     //% position.min=0 position.max=180
     export function setServoPosition(servo: ServoChannel, position: number): void {
         position = sumobit.limit(position, 0, 180);
 
-        // pulseWidth = position * 20 / 18 + 50
         if (servo == ServoChannel.All) {
             sumobit.i2cWrite(ServoChannel.S1, position);
             sumobit.i2cWrite(ServoChannel.S2, position);
