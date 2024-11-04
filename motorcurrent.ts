@@ -11,17 +11,23 @@ const MOTORCURRENT_EVENT_SOURCE = 0x02;
 
 // Motor selection
 enum MotorSelect {
+    
+    //% block="right motor"
     M1 = 0,
+    //% block="left motor"
     M2 = 1,
 
-    //% block="M1 and M2"
+    //% block="right and left motors"
     AND = 1000
 
 }
 
 // Motor selection option used in the comparision function
 enum CompareSelect {
+
+    //% block="right motor"
     M1 = 0,
+    //% block="left motor"
     M2 = 1,
 
     //% block="M1 and M2"
@@ -91,7 +97,6 @@ namespace sumobit {
 
     /**
     * Compare the motor current value (0.00-20.00) with a threshold value and returns the result (true/false).
-    * @param threshold The current DIP position. eg: 14.00
     */
     //% group="Motor Current"
     //% weight=57
@@ -132,7 +137,7 @@ namespace sumobit {
 
     /**
     * Compare the motor current value with a threshold value and do something when true.
-    * @param motor M1, M2 or Both.
+    * @param motor right motor, left motor or right and left motors.
     * @param compareType More than or less than.
     * @param threshold The value to compare with. eg: 7.00
     * @param handler Code to run when the event is raised.

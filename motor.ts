@@ -41,7 +41,7 @@ export enum MotorChannel {
     //% weight=98
     //% blockGap=8
     //% blockId=sumobit_motor_brake
-    //% block="brake motor %motor"
+    //% block="brake %motor motor"
     export function brakeMotor(motor: MotorChannel): void {
         switch (motor) {
             case MotorChannel.MR:
