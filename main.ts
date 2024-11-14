@@ -61,12 +61,12 @@ pins.setPull(DigitalPin.P12, PinPullMode.PullUp)
 namespace sumobit {
     
     // Stop all motor. 
-    brakeMotor(MotorChannel.MR);
-    brakeMotor(MotorChannel.ML);
+    stopMotor(SumobitMotorChannel.RightMotor);
+    stopMotor(SumobitMotorChannel.LeftMotor);
 
     // Disable the servos.
-    disableServo(ServoChannel.S1);
-    disableServo(ServoChannel.S2);
+    disableServo(ServoChannel.Servo1);
+    disableServo(ServoChannel.Servo2);
     
 
     /**

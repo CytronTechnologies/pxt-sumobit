@@ -101,7 +101,7 @@ namespace sumobit {
 
 
     /**
-     * Set the color of an individual RGB pixel.
+     * Set individual RGB pixel to a certain colour
      * @param pixel The pixel number we want to change the color. 
      * @param color RGB color of the pixel.
      */
@@ -118,14 +118,6 @@ namespace sumobit {
     //% pixel.defl='0'
 
     export function setRgbPixelColor(pixel: number, color: number): void {
-
-
-        // Validate the pixel input
-        if (pixel < 0 || pixel > 1) {
-            // Use a specific error code for the pixel out of range
-            control.assert(false, "Error code: 1001 - Pixel must be 0 or 1");
-            return; // Optionally return early to prevent further execution
-        }
 
         // Extract the RGB values
         let red = (color >> 16) & 0xFF;   // Shift right by 16 bits and mask with 0xFF

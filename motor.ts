@@ -9,7 +9,8 @@
 
 
 // Motor direction.
-enum MotorDirection {
+enum SumobitMotorDirection {
+
     //% block="forward"
     Forward = 0,
 
@@ -17,44 +18,43 @@ enum MotorDirection {
     Backward = 1
 };
 
-namespace sumobit {
-
 // Motor channel.
-export enum MotorChannel {
-    
+enum SumobitMotorChannel {
+
     //% block="right"
-    MR = 0,
+    RightMotor = 0,
 
     //% block="left"
-    ML = 1,
+    LeftMotor = 1,
 
     //% block="both"
-    All = 1000,
+    Both = 1000,
 };
 
+namespace sumobit {
 
     /**
      * Stop motor
-     * @param motor Motorchannel eg: Motor.M1
+     * @param motor Motorchannel eg: Motor.RigthMotor
      */
     //% group="DC Motors"
     //% weight=98
     //% blockGap=8
-    //% blockId=sumobit_motor_brake
-    //% block="brake %motor motor"
-    export function brakeMotor(motor: MotorChannel): void {
+    //% blockId=sumobit_motor_stop
+    //% block="stop %motor motor"
+    export function stopMotor(motor: SumobitMotorChannel): void {
         switch (motor) {
-            case MotorChannel.MR:
+            case SumobitMotorChannel.RightMotor:
                 sumobit.i2cWrite(REG_ADD_PWM1, 0);
                 sumobit.i2cWrite(REG_ADD_DIR1, 0);
                 break;
 
-            case MotorChannel.ML:
+            case SumobitMotorChannel.LeftMotor:
                 sumobit.i2cWrite(REG_ADD_PWM2, 0);
                 sumobit.i2cWrite(REG_ADD_DIR2, 0);
                 break;
 
-            case MotorChannel.All:
+            case SumobitMotorChannel.Both:
                 sumobit.i2cWrite(REG_ADD_PWM1, 0);
                 sumobit.i2cWrite(REG_ADD_DIR1, 0);
                 sumobit.i2cWrite(REG_ADD_PWM2, 0);
@@ -70,7 +70,7 @@ export enum MotorChannel {
      * @param motor Motor channel.
      * @param direction Motor direction.
      * @param speed Motor speed (PWM). eg: 128
-     * @param acceleration Acceleration factor (1-9). eg: 4
+     * @param acceleration Acceleration factor (1-9). eg: 9
      */
     //% group="DC Motors"
     //% weight=99
@@ -83,12 +83,12 @@ export enum MotorChannel {
     //% acceleration.min=1 acceleration.max=9
     //% expandableArgumentMode="enabled"
     
-    export function runMotor(motor: MotorChannel, direction: MotorDirection, speed: number, acceleration: number = 4): void {
+    export function runMotor(motor: SumobitMotorChannel, direction: SumobitMotorDirection, speed: number, acceleration: number = 9): void {
         speed = sumobit.limit(speed, 0, 255);
         acceleration = sumobit.limit(acceleration, 1, 9);
         switch (motor) {
-            case MotorChannel.MR:
-                if (direction == MotorDirection.Forward) {
+            case SumobitMotorChannel.RightMotor:
+                if (direction == SumobitMotorDirection.Forward) {
                     sumobit.i2cWrite(REG_ADD_PWM1, speed);
                     sumobit.i2cWrite(REG_ADD_DIR1, 0);
                     sumobit.i2cWrite(REG_ADD_ACCEL1, acceleration);
@@ -100,8 +100,8 @@ export enum MotorChannel {
                 }
                 break;
 
-            case MotorChannel.ML:
-                if (direction == MotorDirection.Forward) {
+            case SumobitMotorChannel.LeftMotor:
+                if (direction == SumobitMotorDirection.Forward) {
                     sumobit.i2cWrite(REG_ADD_PWM2, speed);
                     sumobit.i2cWrite(REG_ADD_DIR2, 0);
                     sumobit.i2cWrite(REG_ADD_ACCEL2, acceleration);
@@ -113,8 +113,8 @@ export enum MotorChannel {
                 }
                 break;
 
-            case MotorChannel.All:
-                if (direction == MotorDirection.Forward) {
+            case SumobitMotorChannel.Both:
+                if (direction == SumobitMotorDirection.Forward) {
                     sumobit.i2cWrite(REG_ADD_PWM1, speed);
                     sumobit.i2cWrite(REG_ADD_DIR1, 0);
                     sumobit.i2cWrite(REG_ADD_ACCEL1, acceleration);
@@ -136,8 +136,9 @@ export enum MotorChannel {
 
     /**
      * Set individual motors speed (speed = -255 to 255, negative value = reverse). 
-     * @param leftSpeed Speed for left motor. eg: 0
-     * @param rightSpeed Speed for right motor. eg: 0
+     * @param leftSpeed Speed for left motor. eg: 100
+     * @param rightSpeed Speed for right motor. eg: 100
+     * @param acceleration Speed for right motor. eg: 9
      */
     //% group="DC Motors"
     //% weight=97
@@ -148,26 +149,22 @@ export enum MotorChannel {
     //% rightSpeed.min=-255 rightSpeed.max=255
     //% acceleration.min=1 acceleration.max=9
     //% expandableArgumentMode="enabled"
-    export function setMotorsSpeed(leftSpeed: number, rightSpeed: number, acceleration: number = 4): void {
-        let leftDir = MotorDirection.Forward;
-        let rightDir = MotorDirection.Forward;
+    export function setMotorsSpeed(leftSpeed: number, rightSpeed: number, acceleration: number = 9): void {
+        let leftDir = SumobitMotorDirection.Forward;
+        let rightDir = SumobitMotorDirection.Forward;
 
         if (leftSpeed < 0) {
             leftSpeed = -leftSpeed;
-            leftDir = MotorDirection.Backward;
+            leftDir = SumobitMotorDirection.Backward;
         }
 
         if (rightSpeed < 0) {
             rightSpeed = -rightSpeed;
-            rightDir = MotorDirection.Backward;
+            rightDir = SumobitMotorDirection.Backward;
         }
         sumobit.runMotor(0, rightDir, rightSpeed, acceleration);
         sumobit.runMotor(1, leftDir, leftSpeed, acceleration);
     }
         
-        
-
     
-
-
 }

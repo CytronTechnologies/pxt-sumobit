@@ -9,39 +9,14 @@
 
 const MOTORCURRENT_EVENT_SOURCE = 0x02;
 
-// Motor selection
-enum MotorSelect {
+// Motor channel (without "both")
+enum SumobitMotorChannel2 {
     
-    //% block="right motor"
-    M1 = 0,
-    //% block="left motor"
-    M2 = 1,
+    //% block="right"
+    RightMotor = 0,
 
-    //% block="right and left motors"
-    AND = 1000
-
-}
-
-// Motor selection option used in the comparision function
-enum CompareSelect {
-
-    //% block="right motor"
-    M1 = 0,
-    //% block="left motor"
-    M2 = 1,
-
-    //% block="M1 and M2"
-    AND = 1000
-
-}
-
-// Comparison type
-enum CompareType {
-    //% block=">"
-    MoreThan = 0,
-
-    //% block="<"
-    LessThan = 1
+    //% block="left"
+    LeftMotor = 1,
 };
 
 
@@ -54,8 +29,8 @@ namespace sumobit {
 
     // Array for mode value.
     let thresholdsArray: number[] = [];
-    let compareTypesArray: CompareType[] = [];
-    let motorArray: CompareSelect[] = [];
+    let compareTypesArray: SumobitCompareType[] = [];
+    let motorArray: SumobitMotorChannel[] = [];
 
     // Array for old compare result.
     let oldCompareResult: boolean[] = [];
@@ -67,9 +42,10 @@ namespace sumobit {
     //% group="Motor Current"
     //% weight=59
     //% blockGap=8
-    //% blockId=sumobit_current_read_m1
+    //% blockId=sumobit_current_read_analog_m1
     //% block="right motor current"
-    export function readM1CurrentValue(): number {
+    //% blockHidden=true
+    export function readRightMotorCurrentValue(): number {
         let highByte: number;
         let lowByte: number;
         highByte = sumobit.i2cRead(REG_ADD_AN1_HIGH);
@@ -83,9 +59,10 @@ namespace sumobit {
     //% group="Motor Current"
     //% weight=58
     //% blockGap=8
-    //% blockId=sumobit_current_read_m2
+    //% blockId=sumobit_current_read_analog_m2
     //% block="left motor current"
-    export function readM2CurrentValue(): number {
+    //% blockHidden=true
+    export function readLeftMotorCurrentValue(): number {
         let highByte: number;
         let lowByte: number;
         highByte = sumobit.i2cRead(REG_ADD_AN2_HIGH);
@@ -93,6 +70,25 @@ namespace sumobit {
         return ((highByte << 8) | lowByte) / 100;
     }
 
+    /**
+    * Read motor current value (2 d.p.).
+    */
+    //% group="Motor Current"
+    //% weight=58
+    //% blockGap=8
+    //% blockId=sumobit_current_return_value
+    //% block="$motor motor current"
+    //% blockHidden=true
+    export function fetchMotorCurrentValue(motor: SumobitMotorChannel2): number {
+
+    switch (motor) {
+        case SumobitMotorChannel2.RightMotor:
+            return readRightMotorCurrentValue();
+        case SumobitMotorChannel2.LeftMotor:
+            return readLeftMotorCurrentValue();
+            
+    }
+    }
 
 
     /**
@@ -103,29 +99,29 @@ namespace sumobit {
     //% blockGap=40
     //% blockId=sumobit_current_compare_value
     //% block="%motor current %compareType %threshold"
-    //% threshold.min=0.00 threshold.max=15.00 REG_ADD_AN1_HIGH
+    //% threshold.min=0.00 threshold.max=20.00 
     //% blockHidden=true
-    export function compareCurrent(motor: CompareSelect, compareType: CompareType, threshold: number,): boolean {
+    export function compareCurrent(motor: SumobitMotorChannel, compareType: SumobitCompareType, threshold: number,): boolean {
         let result = false;
-        let a = readM1CurrentValue();
-        let b = readM2CurrentValue();
+        let a = readRightMotorCurrentValue();
+        let b = readLeftMotorCurrentValue();
 
 
         switch (motor) {
-            case CompareSelect.M1:
-                if ((a > threshold && CompareType.MoreThan) || (a < threshold && CompareType.LessThan)) {
+            case SumobitMotorChannel.RightMotor:
+                if ((a > threshold && SumobitCompareType.MoreThan) || (a < threshold && SumobitCompareType.LessThan)) {
                     result = true;
                 }
                 break;
 
-            case CompareSelect.M2:
-                if ((b > threshold && CompareType.MoreThan) || (b < threshold && CompareType.LessThan)) {
+            case SumobitMotorChannel.LeftMotor:
+                if ((b > threshold && SumobitCompareType.MoreThan) || (b < threshold && SumobitCompareType.LessThan)) {
                     result = true;
                 }
                 break;
 
-            case CompareSelect.AND:
-                if (((a > threshold && b > threshold) && CompareType.MoreThan) || ((a > threshold && b > threshold) && CompareType.LessThan)) {
+            case SumobitMotorChannel.Both:
+                if (((a > threshold && b > threshold) && SumobitCompareType.MoreThan) || ((a > threshold && b > threshold) && SumobitCompareType.LessThan)) {
                     result = true;
                 }
                 break;
@@ -133,7 +129,6 @@ namespace sumobit {
 
         return result;
     }
-
 
     /**
     * Compare the motor current value with a threshold value and do something when true.
@@ -147,8 +142,9 @@ namespace sumobit {
     //% blockGap=40
     //% blockId=sumobit_current_event
     //% block="on %motor current %compareType %threshold"
-    //% threshold.min=0.00 threshold.max=15.00
-    export function onEvent(motor: CompareSelect, compareType: CompareType, threshold: number, handler: Action): void {
+    //% threshold.min=0.00 threshold.max=20.00
+    //% blockHidden=true
+    export function onEvent(motor: SumobitMotorChannel, compareType: SumobitCompareType, threshold: number, handler: Action): void {
         // Use a new event type everytime a new event is create.
         eventType++;
 
