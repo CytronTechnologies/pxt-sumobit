@@ -7,7 +7,7 @@
  *******************************************************************************/
 
 // Preset RGB Colors for the selection gridpicker
-enum RgbColors {
+enum SumobitRgbColors {
     //% block=red
     Red = 0xFF0000,
     //% block=orange
@@ -151,7 +151,7 @@ namespace sumobit {
     //% blockId="sumobit_rgb_colors"
     //% block="%color"
     //% blockHidden=true
-    export function colors(color: RgbColors): number {
+    export function colors(color: SumobitRgbColors): number {
         return <number>color;
     }
 

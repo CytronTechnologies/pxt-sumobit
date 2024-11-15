@@ -35,7 +35,7 @@ namespace sumobit {
 
     /**
      * Stop motor
-     * @param motor Motorchannel eg: Motor.RigthMotor
+     * @param motor Motorchannel eg: SumobitMotorChannel.RightMotor
      */
     //% group="DC Motors"
     //% weight=98

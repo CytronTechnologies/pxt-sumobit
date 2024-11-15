@@ -18,7 +18,8 @@
         "motorcurrent.ts",
         "servo.ts",
         "battery.ts",
-        "rgb.ts"
+        "rgb.ts",
+        "robot.ts"
     ],
     "testFiles": [
         "test.ts"

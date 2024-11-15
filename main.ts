@@ -57,7 +57,7 @@ pins.setPull(DigitalPin.P12, PinPullMode.PullUp)
 */
 
 //% weight=10 color=#ff8000 icon="\uf091" block="SUMO:BIT"
-//% groups=['DC Motors', 'Servos' , 'Mode', 'Motor Current','Opponent Sensors' , 'Edge Sensors', 'RGB LED']
+//% groups=['DC Motors', 'Servos' , 'Mode', 'Motor Current','Opponent Sensors' , 'Edge Sensors', 'RGB LED', 'Robot Kit']
 namespace sumobit {
     
     // Stop all motor. 
