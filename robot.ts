@@ -29,7 +29,7 @@ enum SumobitDirection {
 
 };
 
-enum SumobitTesting {
+enum SumobitAttack{
 
     //% block="testing"
     Test = 0,
@@ -122,8 +122,46 @@ namespace sumobit {
     //% block="attack %mode"
     //% second.fieldOptions.decompileLiterals=true
     //% advanced=true
-    export function attack(mode: SumobitTesting): void {
+    export function attack(mode: SumobitAttack): void {
         let speed = sumobitInitialSpeed
+
+        switch(mode){
+            case SumobitAttack.Test:
+                if (oppSensorDetection(2)) {
+                    
+                } else if (oppSensorDetection(0)) {
+                    sumobit.setMotorsSpeed(0, speed, 9)
+                    basic.pause(300)
+                } else if (oppSensorDetection(4)) {
+                    sumobit.setMotorsSpeed(speed, 0, 9)
+                    basic.pause(300)
+                } else if (oppSensorDetection(1)) {
+                    sumobit.setMotorsSpeed(speed * 0.5, speed, 9)
+                    basic.pause(100)
+                } else if (oppSensorDetection(2)) {
+                    sumobit.setMotorsSpeed(speed, speed * 0.5, 9)
+                    basic.pause(100)
+                }
+            
+
+            case SumobitAttack.Game:
+                if (oppSensorDetection(2)) {
+                    sumobit.setMotorsSpeed(speed, speed,9)
+                } else if (oppSensorDetection(0)) {
+                    sumobit.setMotorsSpeed(0, speed,9)
+                    basic.pause(300)
+                } else if (oppSensorDetection(4)) {
+                    sumobit.setMotorsSpeed(speed, 0, 9)
+                    basic.pause(300)
+                } else if (oppSensorDetection(1)) {
+                    sumobit.setMotorsSpeed(speed*0.5, speed, 9)
+                    basic.pause(100)
+                } else if (oppSensorDetection(2)) {
+                    sumobit.setMotorsSpeed(speed, speed*0.5, 9)
+                    basic.pause(100)
+                }
+
+        }
 
     }
 
