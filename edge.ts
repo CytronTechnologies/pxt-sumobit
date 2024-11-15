@@ -177,7 +177,7 @@ namespace sumobit {
     //% weight=73
     //% blockGap=8
     //% blockId=sumobit_edge_compare_calibrated_value
-    //% block="%edge edge detected"
+    //% block="%edge sensor detect edge"
     export function compareEdgeCalibrated(edge: SumobitEdgeSelection): boolean {
     
     let result = false;
