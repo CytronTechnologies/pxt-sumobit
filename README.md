@@ -1,6 +1,6 @@
 # SUMO:BIT Extension for Microsoft MakeCode
 
-This code provides the driver for [**SUMO:BIT**](https://www.cytron.io/p-sumobit).
+This code provides the driver for [**SUMO:BIT**](https://www.cytron.io/p-sumo-bit).
 
 **SUMO:BIT** is a sumo robot expansion board designed for the BBC micro:bit. It emulates the educational focus of the micro:bit and the simplicity of its coding environment to simplify robotic projects, specifically sumo robots.
 
