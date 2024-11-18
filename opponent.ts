@@ -63,6 +63,13 @@ namespace sumobit {
     //% position.fieldEditor="gridpicker" position.fieldOptions.columns=5
     export function oppSensorValue(sensor: SumobitSensorSelection1): number {
 
+        // Software pullup for the opponent sensors
+        pins.setPull(DigitalPin.P16, PinPullMode.PullUp)
+        pins.setPull(DigitalPin.P15, PinPullMode.PullUp)
+        pins.setPull(DigitalPin.P14, PinPullMode.PullUp)
+        pins.setPull(DigitalPin.P13, PinPullMode.PullUp)
+        pins.setPull(DigitalPin.P12, PinPullMode.PullUp)
+
         switch (sensor) {
             case SumobitSensorSelection1.Left:
                 return pins.digitalReadPin(DigitalPin.P16);
