@@ -1,4 +1,4 @@
-# SUMO:BIT Extension ofr Microsoft MakeCode
+# SUMO:BIT Extension for Microsoft MakeCode
 
 This code provides the driver for [**SUMO:BIT**](https://www.cytron.io/p-sumobit).
 
@@ -19,23 +19,28 @@ This code provides the driver for [**SUMO:BIT**](https://www.cytron.io/p-sumobit
 
 ## DC Motors
 
-* Use ``run (motor selection) motor (direction) at (speed) speed with (accelaration) acceleration factor`` block to control the motors.
-* Acceleration factor 1 to 9 gradually increase acceleration.
-* The  ``set motors speed: left (speed) right (speed) acceleration (accelaration)`` block
+* Use ``run (motor selection) motor (direction) at (speed) speed with (accelaration) acceleration factor`` block to control the right and left motors indivually or both motors simultaneously.
+* The ``set motors speed: left (speed) right (speed) acceleration (accelaration)`` block enables you to control both motors with different speeds in one block. Please note that both motors will share the same acceleration factor. A common application of this block is for turn or rotate.
 * To stop the motor, use the ``brake (motor selection) motor`` block.
 
 ### Moving the robot foward or backward
 
+
+
 ```blocks
 
 input.onButtonPressed(Button.A, function () {
+    // Both motor move forward at 100 speed and 9 acceleration factor for 1 second
     sumobit.runMotor(SumobitMotorChannel.Both, SumobitMotorDirection.Forward, 100, 9)
-    basic.pause(1000)
+    basic.pause(1000) 
+    // Stop both motors for 0.2 second
     sumobit.stopMotor(SumobitMotorChannel.Both)
     basic.pause(200)
+    // Both motor move backwatd at 100 speed and 9 acceleration factor for 1 second
     sumobit.runMotor(sumobit.MotorChannel.All, MotorDirection.Backward, 100, 0)
     basic.pause(1000)
-    sumobit.brakeMotor(sumobit.MotorChannel.All)
+    // Stop both motors
+    sumobit.stopMotor(SumobitMotorChannel.Both)
 })
 
 ```
@@ -45,19 +50,23 @@ input.onButtonPressed(Button.A, function () {
 ```blocks
 
 input.onButtonPressed(Button.A, function () {
-    sumobit.runMotor(sumobit.MotorChannel.All, MotorDirection.Forward, 100)
+    // Both motor move forward at 100 speed and 9 acceleration factor for 1 second
+    sumobit.runMotor(SumobitMotorChannel.Both, SumobitMotorDirection.Forward, 100, 9)
     basic.pause(1000)
-    sumobit.runMotor(sumobit.MotorChannel.MR, MotorDirection.Backward, 50)
-    sumobit.runMotor(sumobit.MotorChannel.ML, MotorDirection.Forward, 50)
+    // Rotate in place by running both motors in opposite directions
+    sumobit.setMotorsSpeed(50, -50, 9)
     basic.pause(500)
-    sumobit.runMotor(sumobit.MotorChannel.All, MotorDirection.Forward, 50)
+    // Run both motor at 50 speed and 9 acceleration factor for 0.5 second
+    sumobit.runMotor(SumobitMotorChannel.Both, SumobitMotorDirection.Forward, 50, 9)
     basic.pause(500)
-    sumobit.runMotor(sumobit.MotorChannel.MR, MotorDirection.Backward, 0)
-    sumobit.runMotor(sumobit.MotorChannel.ML, MotorDirection.Forward, 50)
+    // Rotate around the right wheel by stopping the right motor and running the left motor
+    sumobit.setMotorsSpeed(0, 50, 9)
     basic.pause(1000)
-    sumobit.runMotor(sumobit.MotorChannel.All, MotorDirection.Forward, 100, 5)
-    basic.pause(800)
-    sumobit.brakeMotor(sumobit.MotorChannel.All)
+    // Run both motor at 50 speed and 9 acceleration factor for 0.8 second
+    sumobit.runMotor(SumobitMotorChannel.Both, SumobitMotorDirection.Forward, 100, 9)
+    basic.pause(800
+    // Stop both motors)
+    sumobit.stopMotor(SumobitMotorChannel.Both)
 })
 
 ```
@@ -73,11 +82,15 @@ input.onButtonPressed(Button.A, function () {
 ```blocks
 
 basic.forever(function () {
+    // Show blue colour on RGB0 LED
     sumobit.setRgbPixelColor(0, 0x0000ff)
+    // Show yellow colour on RGB1 LED
     sumobit.setRgbPixelColor(1, 0xffff00)
     basic.pause(2000)
+    // Show purple colour on RGB LED pixels
     sumobit.setAllRgbPixelsColor(sumobit.rgb(255, 0, 255))
     basic.pause(2000)
+    // Turn off all RGB lights
     sumobit.clearAllRgbPixels()
     basic.pause(2000)
 })
@@ -88,56 +101,19 @@ basic.forever(function () {
 
 * Use ``(sensor selection) opponent sensor`` to read the current state (0 or 1) of the digital opponent sensors.
 * The ``(sensor selection) sensor detect opponent`` boolean block returns true if the selected sensor detects an obstacle (Low).
-* Simplify conditional logic by combining all opponent sensor states with ``L(toggle) FL(toggle) FC(toggle) FR(toggle) R(toggle)`` boolean block
 
-### Display sensor state and perform an action when a condition is met
+### Display the opponent sensor state and perform an action when obstacle is detected
 
 ```blocks
 
 basic.forever(function () {
-    basic.showNumber(sumobit.OppSensorValue(SensorSelection1.Center))
-    if (sumobit.OppSensorDetection(SensorSelection2.Center)) {
+    // LED matrix display the current state of the front center opponent sensor (0 or 1)
+    basic.showNumber(sumobit.oppSensorValue(SumobitSensorSelection1.Center))
+    // Red RGB will light up if obstacle detacted by the front center opponent sensor
+    if (sumobit.oppSensorDetection(SumobitSensorSelection2.Left)) {
         sumobit.setAllRgbPixelsColor(0xff0000)
     } else {
-        sumobit.setAllRgbPixelsColor(0x00ff00)
-    }
-})
-
-```
-
-### Basic sumo attack routine conditional block
-
-```blocks
-
-basic.forever(function () {
-    if (sumobit.OppSensorDetection(SensorSelection2.Center)) {
-        sumobit.runMotor(sumobit.MotorChannel.All, MotorDirection.Forward, 255, 5)
-    } else if (sumobit.OppSensorDetection(SensorSelection2.Left1)) {
-        sumobit.runMotor(sumobit.MotorChannel.MR, MotorDirection.Forward, 255, 5)
-        sumobit.runMotor(sumobit.MotorChannel.ML, MotorDirection.Backward, 0)
-    } else if (sumobit.OppSensorDetection(SensorSelection2.Right1)) {
-        sumobit.runMotor(sumobit.MotorChannel.MR, MotorDirection.Backward, 0)
-        sumobit.runMotor(sumobit.MotorChannel.ML, MotorDirection.Forward, 255, 5)
-    } else if (sumobit.OppSensorDetection(SensorSelection2.Left2)) {
-        sumobit.runMotor(sumobit.MotorChannel.MR, MotorDirection.Forward, 100, 5)
-        sumobit.runMotor(sumobit.MotorChannel.ML, MotorDirection.Backward, 100, 5)
-        basic.pause(300)
-    } else if (sumobit.OppSensorDetection(SensorSelection2.Right2)) {
-        sumobit.runMotor(sumobit.MotorChannel.MR, MotorDirection.Backward, 100, 5)
-        sumobit.runMotor(sumobit.MotorChannel.ML, MotorDirection.Forward, 100, 5)
-        basic.pause(300)
-    }
-})
-
-```
-
-### Sumo attack routine when more than one sensor detects an opponent
-
-```blocks
-basic.forever(function () {
-    if (sumobit.OppSensorCombinationBoolean(true, false, false, true, true)) {
-        sumobit.runMotor(sumobit.MotorChannel.MR, MotorDirection.Forward, 255, 5)
-        sumobit.runMotor(sumobit.MotorChannel.ML, MotorDirection.Backward, 128, 5)
+        sumobit.clearAllRgbPixels()
     }
 })
 
@@ -145,21 +121,23 @@ basic.forever(function () {
 
 ## Edge Sensor
 
-* The ``right edge sensor`` and ``left edge sensor`` blocks return analog outputs from the edge sensors.
-* The ``(sensor selection) edge sensor (comparision type) (threshold)`` is a boolean block will return true if the analog value of the sensor 
+* The ``(sensor selection) edge sensor`` block return analog outputs from the edge sensors.
+* Use the ``calibrate edge sensor``  block to automatically find the threshold for detecting the white edge of the Dohyo.
+* The ``(sensor selection) sensor detact edge)`` is a boolean block that will return true if the edge is detacted (analog value is less than threshold.
 
-### Read sensors value on white and black surface
+### Read the analog input values of right and left edge sensors
 
 ```blocks
 
 basic.forever(function () {
     serial.writeString("RIGHT EDGE: ")
-    serial.writeString("" + (sumobit.readEdgeRValue()))
+    serial.writeString("" + (sumobit.fetchEdgeValue(SumobitEdgeSelection.Right)))
     serial.writeString(" | LEFT EDGE: ")
-    serial.writeString("" + (sumobit.readEdgeLValue()))
+    serial.writeString("" + (sumobit.fetchEdgeValue(SumobitEdgeSelection.Left)))
     serial.writeLine("")
     basic.pause(500)
 })
+
 
 ```
 
@@ -167,17 +145,19 @@ basic.forever(function () {
 
 ```blocks
 
+// Calibrate the edge sensor to find the threshold value
+sumobit.calibrateEdgeThreshold()
 basic.forever(function () {
-    if (sumobit.compareEdge(EdgeSide.Right, EdgeCompareType.MoreThan, 600)) {
-        // Reverse
-        sumobit.runMotor(sumobit.MotorChannel.All, MotorDirection.Backward, 50)
+    // Check if the sensor reading is less than threshold value (edge detected)
+    if (sumobit.compareEdgeCalibrated(SumobitEdgeSelection.Right)) {
+        // Reverse the robot to move away from the edge
+        sumobit.runMotor(SumobitMotorChannel.Both, SumobitMotorDirection.Backward, 50, 9)
         basic.pause(300)
-        // Rotate right backward
-        sumobit.runMotor(sumobit.MotorChannel.MR, MotorDirection.Backward, 50)
-        sumobit.runMotor(sumobit.MotorChannel.ML, MotorDirection.Forward, 50)
-        basic.pause(600)
-        // Stop the motors
-        sumobit.brakeMotor(sumobit.MotorChannel.All)
+        // Make a ~180 degree rotation
+        sumobit.setMotorsSpeed(-50, 50)
+        basic.pause(500)
+        // Stop the robot for a while before continue searching for opponent
+        sumobit.stopMotor(SumobitMotorChannel.Both)
         basic.pause(50)
     }
 })
@@ -195,59 +175,17 @@ basic.forever(function () {
 ```blocks
 
 basic.forever(function () {
+    // LED matrix display the current mode
     basic.showNumber(sumobit.readModeValue())
-    if (sumobit.checkMode(11)) {
+    // Red RGB will light up when the current mode is 7
+    if (sumobit.checkMode(7)) {
         sumobit.setAllRgbPixelsColor(0x00ff00)
     } else {
-        sumobit.setAllRgbPixelsColor(0xff0000)
+        sumobit.clearAllRgbPixels()
     }
 })
 
 ```
-
-## Motor Current
-
-* The ``right motor current`` and ``left motor current`` blocks return the respective motor current value (up to 2 decimal places).
-* Use the ``on (motor selection) current (comparision type) (threshold)``  block to trigger an event when the motor current exceeds the specified threshold.
-
-### Making a sharp turn when the motor stalls
-
-```blocks
-
-sumobit.onEvent(CompareSelect.M1, CompareType.MoreThan, 7, function () {
-    sumobit.runMotor(sumobit.MotorChannel.MR, MotorDirection.Backward, 100)
-    sumobit.runMotor(sumobit.MotorChannel.ML, MotorDirection.Forward, 0)
-    basic.pause(600)
-    sumobit.brakeMotor(sumobit.MotorChannel.All)
-    basic.pause(50)
-})
-
-```
-
-
-## Servo
-
-* Use the ``set servo (servo selection) position to (angle) degrees`` block to control the servo angle.
-* The ``disable servo (servo selection)`` block resets the servo(s) to the initial position (90°).
-
-### Basic servo control
-
-```blocks
-
-input.onButtonPressed(Button.A, function () {
-    sumobit.setServoPosition(ServoChannel.S1, 0)
-    sumobit.setServoPosition(ServoChannel.S2, 180)
-})
-input.onButtonPressed(Button.AB, function () {
-    sumobit.disableServo(ServoChannel.All)
-})
-input.onButtonPressed(Button.B, function () {
-    sumobit.setServoPosition(ServoChannel.S1, 180)
-    sumobit.setServoPosition(ServoChannel.S2, 0)
-})
-
-```
-
 
 ## Battery
 
@@ -258,8 +196,10 @@ input.onButtonPressed(Button.B, function () {
 ```blocks
 
 basic.forever(function () {
+    // LED matrix diplay the battery voltage
     basic.showNumber(sumobit.readBatteryValue())
-    if (sumobit.readBatteryValue() <= 10) {
+    // Red RGB will light up when the battery voltage is less tgab 11V
+    if (sumobit.readBatteryValue() < 11) {
         sumobit.setAllRgbPixelsColor(0xff0000)
     } else {
         sumobit.clearAllRgbPixels()
@@ -267,6 +207,20 @@ basic.forever(function () {
 })
 
 ```
+
+## More (Robot Kit)
+
+* Use the ``set robot speed(speed)`` block to set the initial speed of both motor. The speed be used in most of blocks in this section.
+* The `` start countdown (3 second or 5 second)`` is use to start LED matric countdown from (3 or 5 second) to 9. The block is commmonly use befort starting a sumo robot match.
+* ``backoff (direction)`` is a preset backoff routine. Direction is the rotation direction of the robot after edge is detected.
+* The ``attack (mode)`` is a preset attack routine that can be used for both testing and during the game. The robot's reaction will be based on which opponent sensor detects an opponent.
+
+
+
+
+
+
+
 
 
 
