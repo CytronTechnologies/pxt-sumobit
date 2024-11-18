@@ -4,7 +4,7 @@ This code provides the driver for [**SUMO:BIT**](https://www.cytron.io/p-sumobit
 
 **SUMO:BIT** is a sumo robot expansion board designed for the BBC micro:bit. It emulates the educational focus of the micro:bit and the simplicity of its coding environment to simplify robotic projects, specifically sumo robots.
 
-![SUMO:BIT](https://raw.githubusercontent.com/CytronTechnologies/pxt-sumobit/master/icon.png)
+![SUMO:BIT](https://raw.githubusercontent.com/CytronTechnologies/pxt-sumobit/master/sumobit.png)
 
 
 ## Adding the Extension in MakeCode Editor  
@@ -20,7 +20,8 @@ This code provides the driver for [**SUMO:BIT**](https://www.cytron.io/p-sumobit
 ## DC Motors
 
 * Use ``run (motor selection) motor (direction) at (speed) speed with (accelaration) acceleration factor`` block to control the motors.
-* An acceleration factor of 0 means no acceleration (the motor runs at the set speed), while values from 1 to 9 gradually increase acceleration.
+* Acceleration factor 1 to 9 gradually increase acceleration.
+* The  ``set motors speed: left (speed) right (speed) acceleration (accelaration)`` block
 * To stop the motor, use the ``brake (motor selection) motor`` block.
 
 ### Moving the robot foward or backward
@@ -28,9 +29,9 @@ This code provides the driver for [**SUMO:BIT**](https://www.cytron.io/p-sumobit
 ```blocks
 
 input.onButtonPressed(Button.A, function () {
-    sumobit.runMotor(sumobit.MotorChannel.All, MotorDirection.Forward, 100, 5)
+    sumobit.runMotor(SumobitMotorChannel.Both, SumobitMotorDirection.Forward, 100, 9)
     basic.pause(1000)
-    sumobit.brakeMotor(sumobit.MotorChannel.All)
+    sumobit.stopMotor(SumobitMotorChannel.Both)
     basic.pause(200)
     sumobit.runMotor(sumobit.MotorChannel.All, MotorDirection.Backward, 100, 0)
     basic.pause(1000)
