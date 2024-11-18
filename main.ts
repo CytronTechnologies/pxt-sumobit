@@ -52,13 +52,13 @@ const REG_ADD_RESET = 36;
 //% groups=['DC Motors', 'Servos' , 'Mode', 'Motor Current','Opponent Sensors' , 'Edge Sensors', 'RGB LED', 'Robot Kit']
 namespace sumobit {
     
-    // Stop all motor. 
-    stopMotor(SumobitMotorChannel.RightMotor);
-    stopMotor(SumobitMotorChannel.LeftMotor);
+    // Stop all motor initially
+    sumobit.i2cWrite(REG_ADD_PWM1, 0);
+    sumobit.i2cWrite(REG_ADD_PWM2, 0);
 
-    // Disable the servos.
-    disableServo(ServoChannel.Servo1);
-    disableServo(ServoChannel.Servo2);
+    // Disable the servos initially
+    sumobit.i2cWrite(ServoChannel.Servo1, 0);
+    sumobit.i2cWrite(ServoChannel.Servo2, 0);
     
 
     /**
