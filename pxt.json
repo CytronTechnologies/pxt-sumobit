@@ -4,9 +4,7 @@
     "description": "MakeCode Extension for Cytron SUMO:BIT",
     "license": "MIT",
     "dependencies": {
-        "core": "*",
-        "radio": "*",
-        "microphone": "*"
+        "core": "*"
     },
     "files": [
         "main.ts",
