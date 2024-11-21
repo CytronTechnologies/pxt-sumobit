@@ -134,22 +134,23 @@ namespace sumobit {
 
     /**
     * Edge threshold auto calibration.
+    * @param coefficient Threshold calibration ratio. eg: 5
     */
     //% group="Edge Sensors"
     //% weight=75
     //% blockGap=8
     //% blockId=sumobit_edge_calibrate_threshold
-    //% block="calibrate edge sensor"
-    export function calibrateEdgeThreshold(): void {
+    //% block="set edge sensor threshold|| - coefficient:%coefficient"
+    //% coefficient.min=1 coefficient.max=9
     
-    let startTime1 = control.millis();
+    
+    export function calibrateEdgeThreshold(coefficient:number=5): void {
+    
 
-    while (control.millis() - startTime1 < 1000) {
+    sumobitRightThreshold = pins.analogReadPin(EDGE_R_PIN) * (coefficient*0.1);
+    sumobitLeftThreshold = pins.analogReadPin(EDGE_L_PIN) * (coefficient *0.1);
     
-    sumobitRightThreshold = pins.analogReadPin(EDGE_R_PIN)*0.5;
-    sumobitLeftThreshold  = pins.analogReadPin(EDGE_L_PIN)*0.5;
     
-    }
 }
 
     /**
@@ -183,13 +184,13 @@ namespace sumobit {
     let result = false;
     switch (edge) {
         case SumobitEdgeSelection.Right:
-            if (sumobitRightEdgeValue < sumobitRightThreshold) {
+            if (readRightEdgeValue() < sumobitRightThreshold) {
                 result = true;
             }
             break;
 
         case SumobitEdgeSelection.Left:
-            if (sumobitLeftEdgeValue < sumobitLeftThreshold) {
+            if (readLeftEdgeValue() < sumobitLeftThreshold) {
                 result = true;
             }
             break;

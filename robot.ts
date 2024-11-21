@@ -6,7 +6,7 @@
  * Email:   support@cytron.io
  *******************************************************************************/
 
-let sumobitInitialSpeed: number;
+
 
 
 enum SumobitCountdown {
@@ -29,21 +29,26 @@ enum SumobitDirection {
 
 };
 
-enum SumobitAttack{
+enum SumobitSearch {
 
-    //% block="testing"
-    Test = 0,
+    //% block="curve"
+    Curve = 0,
 
-    //% block="game"
-    Game = 1,
+    //% block="straight"
+    Straight = 1,
 
 };
 
+
+
 namespace sumobit {
+
+    let initialSpeed: number;
+    let searchDirection: number = -1;
 
     /**
      * Motor speed initialization
-     * * @param speed Intitial Robot Speed eg: 255
+     * @param speed Intitial Robot Speed eg: 255
      */
     //% group="Robot Kit"
     //% weight=19
@@ -52,23 +57,23 @@ namespace sumobit {
     //% block="set robot speed %speed"
     //% speed.min=0 speed.max=255
     //% second.fieldOptions.decompileLiterals=true
-    //% advanced=true
+    //% subcategory="Robot Kit"
+    //% blockHidden=true
     export function setSpeed(speed: number): void {
-        speed = sumobitInitialSpeed;
+        speed = initialSpeed;
     }
 
     /**
      * Start LED matrix countdown (5 or 3 second)
-     * * @param second Countdown Second eg: SumobitCountdown.Five
+     * @param second Countdown Second eg: SumobitCountdown.Five
      */
     //% group="Robot Kit"
     //% weight=18
     //% blockGap=8
     //% blockId="sumobit_robot_countdown"
     //% block="start countdown %second"
-
     //% second.fieldOptions.decompileLiterals=true
-    //% advanced=true
+    //% subcategory="Robot Kit"
     export function countdown(second: SumobitCountdown): void {
         let startTime = control.millis();
 
@@ -81,29 +86,41 @@ namespace sumobit {
 
     /**
      * Preset backoff routine
-     * * @param direction Backoff turn direction eg: SumobitDirection.Right
+     * @param direction Backoff turn direction eg: SumobitDirection.Right
+     * @param speed Motor speed when reverse and turn (0-255). eg: 120
+     * @param acceleration Motor acceleration factor (1-9). eg: 9
      */
     //% group="Robot Kit"
     //% weight=17
     //% blockGap=8
     //% blockId="sumobit_robot_backoff"
-    //% block="backoff %direction"
+    //% block="backoff %direction ||  speed:%speed acceleration:%acceleration"
+    //% expandableArgumentMode="toggle"
+    //% speed.min=0 speed.max=255
+    //% acceleration.min=1 acceleration.max=9
     //% second.fieldOptions.decompileLiterals=true
-    //% advanced=true
-    export function backoff(direction: SumobitDirection): void {
-        let speed = sumobitInitialSpeed
+    //% subcategory="Robot Kit"
+    
+    export function backoff(direction: SumobitDirection, speed:number=120, acceleration:number=9): void {
+        
         //stop motor
         sumobit.stopMotor(1000)
         basic.pause(50)
-        //reverse
-        sumobit.setMotorsSpeed(speed / -1, speed / -1, 9)
+        //reverse 
+        sumobit.setMotorsSpeed(speed * -1, speed * -1, acceleration)
         basic.pause(350 - speed)
-
+        
+        //rotate robot
         switch (direction) {
             case SumobitDirection.Right:
-                sumobit.setMotorsSpeed(speed / -1, speed / 1, 9);
+                searchDirection=1;
+                sumobit.setMotorsSpeed(speed * 1, speed * -1 , 9);
+                break;
+
             case SumobitDirection.Left:
-                sumobit.setMotorsSpeed(speed / 1, speed / -1, 9);
+                searchDirection = -1;
+                sumobit.setMotorsSpeed(speed * -1, speed * 1, 9);
+                break;
         }
         basic.pause(380 - speed)
         sumobit.stopMotor(1000)
@@ -112,59 +129,86 @@ namespace sumobit {
     }
 
     /**
-     * Attack routine for testing or game
-     * * @param 
+     * Attack routine
+     * @param speed Motor speed when Front Cenre detects opponent (0-255). eg: 120
+     * @param acceleration Motor acceleration factor (1-9). eg: 9
      */
     //% group="Robot Kit"
     //% weight=16
     //% blockGap=8
     //% blockId="sumobit_robot_attack"
-    //% block="attack %mode"
+    //% block="attack ||  speed:%speed acceleration:%acceleration"
+    //% expandableArgumentMode="toggle"
+    //% speed.min=0 speed.max=255
+    //% acceleration.min=1 acceleration.max=9
     //% second.fieldOptions.decompileLiterals=true
-    //% advanced=true
-    export function attack(mode: SumobitAttack): void {
-        let speed = sumobitInitialSpeed
+    //% subcategory="Robot Kit"
+    
+    export function attack(speed: number=120, acceleration: number=9): void {
+        
+                // Opponent in Front Centre
+                if (oppSensorDetection(2)) {
+                    sumobit.setMotorsSpeed(speed, speed, acceleration)
+                }
+                // Opponent in Front Right
+                else if (oppSensorDetection(3)) {
+                    sumobit.setMotorsSpeed(255, 0, 9)
+                    
+                }
+                // Opponent in Front Left
+                else if (oppSensorDetection(1)) {
+                    sumobit.setMotorsSpeed(0, 255, 9)
+                    
+                } 
+                // Opponent at Right
+                else if (oppSensorDetection(4)) {
+                        sumobit.setMotorsSpeed(255, -255, 9)
+                    
+                } 
+                // Opponent at Left
+                else if (oppSensorDetection(0)) {
+                    sumobit.setMotorsSpeed(-255, 255, 9)
+                    
+                }
+
+    }
+
+    /**
+    * Robot search routine
+    * @param mode Robot search movement when no opponent is detected eg: SumobitSearch(0)
+    * @param speed Motor speed when Front Cenre detects opponent (0-255). eg: 120
+    * @param acceleration Motor acceleration factor (1-9). eg: 9
+    */
+    //% group="Robot Kit"
+    //% weight=15
+    //% blockGap=8
+    //% blockId="sumobit_robot_search"
+    //% block="search %mode ||  speed:%speed acceleration:%acceleration"
+    //% speed.min=0 speed.max=255
+    //% acceleration.min=1 acceleration.max=9
+    //% second.fieldOptions.decompileLiterals=true
+    //% subcategory="Robot Kit"
+    //% expandableArgumentMode="toggle"
+    export function search(mode:SumobitSearch, speed:number=120, acceleration:number= 9): void {
 
         switch(mode){
-            case SumobitAttack.Test:
-                if (oppSensorDetection(2)) {
-                    
-                } else if (oppSensorDetection(0)) {
-                    sumobit.setMotorsSpeed(0, speed, 9)
-                    basic.pause(300)
-                } else if (oppSensorDetection(4)) {
-                    sumobit.setMotorsSpeed(speed, 0, 9)
-                    basic.pause(300)
-                } else if (oppSensorDetection(1)) {
-                    sumobit.setMotorsSpeed(speed * 0.5, speed, 9)
-                    basic.pause(100)
-                } else if (oppSensorDetection(2)) {
-                    sumobit.setMotorsSpeed(speed, speed * 0.5, 9)
-                    basic.pause(100)
-                }
-            
+            case SumobitSearch.Straight:
+                sumobit.setMotorsSpeed(speed, speed , acceleration)
+                break;
 
-            case SumobitAttack.Game:
-                if (oppSensorDetection(2)) {
-                    sumobit.setMotorsSpeed(speed, speed,9)
-                } else if (oppSensorDetection(0)) {
-                    sumobit.setMotorsSpeed(0, speed,9)
-                    basic.pause(300)
-                } else if (oppSensorDetection(4)) {
-                    sumobit.setMotorsSpeed(speed, 0, 9)
-                    basic.pause(300)
-                } else if (oppSensorDetection(1)) {
-                    sumobit.setMotorsSpeed(speed*0.5, speed, 9)
-                    basic.pause(100)
-                } else if (oppSensorDetection(2)) {
-                    sumobit.setMotorsSpeed(speed, speed*0.5, 9)
-                    basic.pause(100)
-                }
+            case SumobitSearch.Curve:
+            if (searchDirection=1){
+                // curve to right
+                sumobit.setMotorsSpeed(speed , speed * 0.85, acceleration)
+            } else if (searchDirection = -1) {
+                // curve to left
+                sumobit.setMotorsSpeed(speed * 0.85, speed , acceleration)
+            }
+            break;
 
         }
-
     }
 
 
 
-}
+}// namespace

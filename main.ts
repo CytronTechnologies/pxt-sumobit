@@ -49,7 +49,7 @@ const REG_ADD_RESET = 36;
 */
 
 //% weight=10 color=#ff8000 icon="\uf091" block="SUMO:BIT"
-//% groups=['DC Motors', 'Servos' , 'Mode', 'Motor Current','Opponent Sensors' , 'Edge Sensors', 'RGB LED', 'Robot Kit']
+//% groups=['DC Motors', 'Servos' , 'Mode', 'Motor Current','Opponent Sensors' , 'Edge Sensors', 'RGB LED']
 namespace sumobit {
     
     // Stop all motor initially

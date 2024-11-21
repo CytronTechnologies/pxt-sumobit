@@ -49,7 +49,7 @@ basic.forever(function () {
 
         }
         if (sumobit.checkMode(2)) {
-            sumobit.attack(SumobitAttack.Test)
+            sumobit.attack(0,9)
         } else {
 
         }
