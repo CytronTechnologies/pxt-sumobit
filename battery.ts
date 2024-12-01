@@ -9,7 +9,7 @@
 namespace sumobit {
 
     /**
-    * Read the current battery voltage (2 d.p.).
+    * Get the current battery voltage (2 d.p.).
     */
     //% group="Battery"
     //% weight=49

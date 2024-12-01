@@ -35,9 +35,9 @@ enum SumobitSearch {
 
 namespace sumobit {
 
-    let initialSpeed: number;
-    let searchDirection: number = -1;
-    let searchMillis = control.millis();
+let initialSpeed: number;
+let searchDirection: number = -1;
+let searchMillis = control.millis();
 
     /**
      * Motor speed initialization
@@ -57,14 +57,15 @@ namespace sumobit {
     }
 
     /**
-     * Start LED matrix countdown (5 or 3 second)
-     * @param second Countdown Second eg: SumobitCountdown.Five
+     * Start a countdown timer on LED (5 or 3 second).
+     * @param second The duration of the countdown. eg: SumobitCountdown.Five
      */
     //% group="Robot Kit"
     //% weight=18
     //% blockGap=8
     //% blockId="sumobit_robot_countdown"
     //% block="start countdown %second"
+    //% second.defl=5
     //% second.fieldOptions.decompileLiterals=true
     //% subcategory="Robot Kit"
     export function countdown(second: SumobitCountdown): void {
@@ -77,7 +78,7 @@ namespace sumobit {
     }
 
     /**
-     * Preset backoff routine
+     * Backoff routine
      * @param direction Backoff turn direction eg: SumobitDirection.Right
      * @param speed Motor speed when reverse and turn (0-255). eg: 120
      * @param acceleration Motor acceleration factor (1-9). eg: 9
@@ -88,8 +89,11 @@ namespace sumobit {
     //% blockId="sumobit_robot_backoff"
     //% block="backoff %direction speed:%speed || acceleration:%acceleration"
     //% expandableArgumentMode="toggle"
+    //% direction.defl=1
     //% speed.min=0 speed.max=255
+    //% speed.defl=120
     //% acceleration.min=1 acceleration.max=9
+    //% acceleration.defl=9
     //% second.fieldOptions.decompileLiterals=true
     //% subcategory="Robot Kit"
 
@@ -121,7 +125,7 @@ namespace sumobit {
 
     /**
      * Attack routine
-     * @param speed Motor speed when Front Cenre detects opponent (0-255). eg: 120
+     * @param speed Motor speed when Front Centre sensor detects opponent (0-255). eg: 120
      * @param acceleration Motor acceleration factor (1-9). eg: 9
      */
     //% group="Robot Kit"
@@ -131,7 +135,9 @@ namespace sumobit {
     //% block="attack speed:%speed || acceleration:%acceleration"
     //% expandableArgumentMode="toggle"
     //% speed.min=0 speed.max=255
+    //% speed.defl=120
     //% acceleration.min=1 acceleration.max=9
+    //% acceleration.defl=9
     //% second.fieldOptions.decompileLiterals=true
     //% subcategory="Robot Kit"
 
@@ -161,8 +167,8 @@ namespace sumobit {
 
     /**
     * Robot search routine
-    * @param mode Robot search movement when no opponent is detected eg: SumobitSearch(0)
-    * @param speed Motor speed when Front Cenre detects opponent (0-255). eg: 120
+    * @param mode The search mode. eg: SumobitSearch.0
+    * @param speed Motor speed when Front Centre sensor detects opponent (0-255). eg: 120
     * @param acceleration Motor acceleration factor (1-9). eg: 9
     */
     //% group="Robot Kit"
@@ -170,9 +176,11 @@ namespace sumobit {
     //% blockGap=8
     //% blockId="sumobit_robot_search"
     //% block="search %mode speed:%speed || acceleration:%acceleration"
+    //% mode.defl=0
     //% speed.min=0 speed.max=255
+    //% speed.defl=120
     //% acceleration.min=1 acceleration.max=9
-    //% second.fieldOptions.decompileLiterals=true
+    //% acceleration.defl=9
     //% subcategory="Robot Kit"
     //% expandableArgumentMode="toggle"
     export function search(mode: SumobitSearch, speed: number = 120, acceleration: number = 9): void {
@@ -202,4 +210,6 @@ namespace sumobit {
                 break;
         }
     }
-} // namespace
+
+
+} 

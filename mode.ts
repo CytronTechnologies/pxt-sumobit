@@ -10,8 +10,10 @@
 
 namespace sumobit {
 
+// Mode event source flag.
 const MODE_EVENT_SOURCE = 0x01;
 
+// Flag to indicate whether the background function has been created.
 let bgFunctionCreated = false;
 
 // Event type.
@@ -25,7 +27,7 @@ let oldCompareResult: boolean[] = [];
 
 
     /**
-     * Read the current mode number(0-15).
+     * Get the current mode number(0-15).
      */
     //% group="Mode"
     //% weight=69
@@ -37,22 +39,22 @@ let oldCompareResult: boolean[] = [];
     }
 
     /**
-    * Check the current mode number (0-15) and returns the result if true.
-    * @param modevalue The current DIP position. eg: 7
+    * Returns true if the mode matches the specified value.
+    * @param mode The mode number to compare. eg: 7
     */
     //% group="Mode"
     //% weight=68
     //% blockGap=40
     //% blockId=sumobit_mode_compare_value
-    //% block="mode %modevalue"
-    //% modevalue.min=0 modevalue.max=15
+    //% block="mode %mode"
+    //% mode.min=0 mode.max=15
+    //% mode.defl=7
     export function checkMode(modevalue: number): boolean {
         let result = false;
 
         if (readModeValue() === modevalue) {
             result = true;
         }
-
         return result;
     }
 

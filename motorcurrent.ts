@@ -21,8 +21,10 @@ enum SumobitMotorChannel2 {
 
 namespace sumobit {
 
+// Mode event source flag.
 const MOTORCURRENT_EVENT_SOURCE = 0x02;
 
+// Flag for background function creation
 let bgFunctionCreated = false;
 
 // Event type.

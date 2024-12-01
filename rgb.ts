@@ -71,7 +71,6 @@ namespace sumobit {
 
     }
 
-
     /**
      * Set all RGB pixels to the specified color.
      * @param color RGB color of the pixel.
@@ -104,7 +103,7 @@ namespace sumobit {
     /**
      * Set individual RGB pixel to a certain colour
      * @param pixel The pixel number we want to change the color. 
-     * @param color RGB color of the pixel.
+     * @param color The desired color in RGB format.
      */
     //% group="RGB LED"
     //% weight=26
@@ -114,7 +113,7 @@ namespace sumobit {
     //% color.shadow="colorNumberPicker"
     //% pixel.min=0 pixel.max=1
     //% pixel.fieldEditor="numberdropdown"
-    //% pixel.fieldOptions.decompileLiterals=true
+    //% pixel.fieldOptions.decompileLiterals=false
     //% pixel.fieldOptions.values='0,1'
     //% pixel.defl='0'
 
@@ -158,7 +157,7 @@ namespace sumobit {
 
 
     /**
-     *  Convert the specified red, green, and blue channel values into an RGB color value.
+     * Convert the specified red, green, and blue channel values into an RGB color value.
      * @param red Value of the red channel (0 - 255). eg: 255
      * @param green Value of the green channel (0 - 255). eg: 255
      * @param blue Value of the blue channel (0 - 255). eg: 255

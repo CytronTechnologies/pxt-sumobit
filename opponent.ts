@@ -56,13 +56,15 @@ namespace sumobit {
 
 
     /**
-    * Read the opponent sensor value. 
+    * Returns the opponent sensor value.
+    * @param sensor The opponent sensor to read (Left, Front Left, Center, Front Right, Right). eg: SumobitSensorSelection1.Right
     */
     //% group="Opponent Sensors"
     //% weight=89
     //% blockGap=8
     //% blockId=sumobit_maker_object_read_digital
     //% block="%sensor opponent sensor"
+    //% sensor.defl=4
     //% position.fieldEditor="gridpicker" position.fieldOptions.columns=5
     export function oppSensorValue(sensor: SumobitSensorSelection1): number {
 
@@ -90,14 +92,15 @@ namespace sumobit {
     }
 
     /**
-     * Return true if the opponent sensor is low (Obstacle detected). 
+     * Returns true if the opponent sensor is low (Obstacle detected).
+     * @param sensor The opponent sensor to read (Left, Front Left, Center, Front Right, Right). eg: SumobitSensorSelection2.Right
      */
     //% group="Opponent Sensors"
     //% weight=88
     //% blockGap=8
     //% blockId=sumobit_maker_object_detect_opponent
     //% block="%position sensor detect opponent"
-    
+    //% position.defl = 4
     export function oppSensorDetection(position: SumobitSensorSelection2): boolean {
 
 
@@ -159,7 +162,6 @@ namespace sumobit {
     //% TogL.shadow="toggleHighLow" TogFL.shadow="toggleHighLow" TogFC.shadow="toggleHighLow" TogFR.shadow="toggleHighLow" TogR.shadow="toggleHighLow"
     //% inlineInputMode=inline
     //% blockHidden=true
-
     export function oppSensorCombinationBoolean(TogL: boolean, TogFL: boolean, TogFC: boolean, TogFR: boolean, TogR: boolean): boolean {
     let sensorValues = [
 

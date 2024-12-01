@@ -10,7 +10,6 @@
 
 // Motor direction.
 enum SumobitMotorDirection {
-
     //% block="forward"
     Forward = 0,
 
@@ -20,7 +19,6 @@ enum SumobitMotorDirection {
 
 // Motor channel.
 enum SumobitMotorChannel {
-
     //% block="right"
     RightMotor = 0,
 
@@ -36,13 +34,14 @@ namespace sumobit {
 
     /**
      * Stop motor
-     * @param motor Motorchannel eg: SumobitMotorChannel.RightMotor
+     * @param motor The motor to control. eg: SumobitMotorChannel.Both
      */
     //% group="DC Motors"
     //% weight=98
     //% blockGap=8
     //% blockId=sumobit_motor_stop
     //% block="stop %motor motor"
+    //% motor.defl=1000
     export function stopMotor(motor: SumobitMotorChannel): void {
         switch (motor) {
             case SumobitMotorChannel.RightMotor:
@@ -66,12 +65,11 @@ namespace sumobit {
 
 
     /**
-     * Run the motor forward or backward.
-     * (Speed = 0-255) (Acceleration = 1-9).
-     * @param motor Motor channel.
-     * @param direction Motor direction.
-     * @param speed Motor speed (PWM). eg: 128
-     * @param acceleration Acceleration factor (1-9). eg: 9
+     * Run the motor forward or backward (Speed = 0-255) (Acceleration = 1-9).
+     * @param motor The motor to control. eg: SumobitMotorChannel.Both
+     * @param direction The direction of rotation (Forward or Backward). eg: SumobitMotorDirection.Forward
+     * @param speed The Motor speed (PWM). eg: 120
+     * @param acceleration Acceleration factor, higher value results in a faster rate of speed change (1-9). eg: 9
      */
     //% group="DC Motors"
     //% weight=99
@@ -80,8 +78,12 @@ namespace sumobit {
     //% accel.fieldOptions.label="Acceleration Factor"
     //% block="run %motor motor %direction at %speed speed || with %acceleration acceleration factor"
     //% inlineInputMode=inline
+    //% motor.defl=0
+    //% direction.defl=1000
     //% speed.min=0 speed.max=255
+    //% speed.defl=120
     //% acceleration.min=1 acceleration.max=9
+    //% acceleration.defl=9
     //% expandableArgumentMode="enabled"
     
     export function runMotor(motor: SumobitMotorChannel, direction: SumobitMotorDirection, speed: number, acceleration: number = 9): void {
@@ -136,10 +138,10 @@ namespace sumobit {
     }
 
     /**
-     * Set individual motors speed (speed = -255 to 255, negative value = reverse). 
-     * @param leftSpeed Speed for left motor. eg: 100
-     * @param rightSpeed Speed for right motor. eg: 100
-     * @param acceleration Speed for right motor. eg: 9
+     * Set the speed and direction of both motors independently (speed = -255 to 255, negative value = reverse).
+     * @param leftSpeed The desired speed of the left motor. eg: 120
+     * @param rightSpeed The desired speed of the right motor. eg: 120
+     * @param acceleration Acceleration factor, higher value results in a faster rate of speed change (1-9). eg: 9
      */
     //% group="DC Motors"
     //% weight=97
@@ -147,8 +149,11 @@ namespace sumobit {
     //% blockId=sumobit_motor_set_speed
     //% block="set motors speed: left %leftSpeed right %rightSpeed || acceleration %acceleration "
     //% leftSpeed.min=-255 leftSpeed.max=255
+    //% leftSpeed.defl=120
     //% rightSpeed.min=-255 rightSpeed.max=255
+    //% rightSpeed.defl=120
     //% acceleration.min=1 acceleration.max=9
+    //% acceleration.defl=9
     //% expandableArgumentMode="enabled"
     export function setMotorsSpeed(leftSpeed: number, rightSpeed: number, acceleration: number = 9): void {
         let leftDir = SumobitMotorDirection.Forward;

@@ -58,8 +58,8 @@ namespace sumobit {
     sumobit.i2cWrite(REG_ADD_PWM2, 0);
 
     // Disable the servos initially
-    sumobit.i2cWrite(ServoChannel.Servo1, 0);
-    sumobit.i2cWrite(ServoChannel.Servo2, 0);
+    sumobit.i2cWrite(SumobitServoChannel.Servo1, 0);
+    sumobit.i2cWrite(SumobitServoChannel.Servo2, 0);
     
 
     /**
