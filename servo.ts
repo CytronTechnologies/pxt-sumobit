@@ -30,7 +30,7 @@ namespace sumobit{
     //% blockGap=8
     //% blockId=sumobit_servo_disable
     //% block="disable servo %servo"
-    //% blockHidden=true
+    
     export function disableServo(servo: ServoChannel): void {
         if (servo == ServoChannel.All) {
             sumobit.i2cWrite(ServoChannel.Servo1, 0);
@@ -51,15 +51,18 @@ namespace sumobit{
     //% weight=39
     //% blockGap=8
     //% blockId=sumobit_servo_set_position
-    //% block="set %servo position to %position degrees"
-    //% position.min=0 position.max=180
-    //% blockHidden = true
-    export function setServoPosition(servo: ServoChannel, position: number): void {
+    //% block="set %servo position to %position \\° || at speed:%speed"
+    //% position.min=0 position.max=180 
+    
+    export function setServoPosition(servo: ServoChannel, position: number, speed:number=9): void {
         position = sumobit.limit(position, 0, 180);
 
         if (servo == ServoChannel.All) {
-            sumobit.i2cWrite(ServoChannel.Servo1, position);
-            sumobit.i2cWrite(ServoChannel.Servo1, position);
+            sumobit.i2cWrite(REG_ADD_SRV1_POS, position);
+            sumobit.i2cWrite(REG_ADD_SRV2_POS, position);
+            sumobit.i2cWrite(REG_ADD_SRV1_SPEED, position);
+            sumobit.i2cWrite(REG_ADD_SRV1_SPEED, position);
+            
         }
         else {
             sumobit.i2cWrite(servo, position);
