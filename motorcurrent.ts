@@ -7,7 +7,6 @@
  *******************************************************************************/
 
 
-const MOTORCURRENT_EVENT_SOURCE = 0x02;
 
 // Motor channel (without "both")
 enum SumobitMotorChannel2 {
@@ -22,18 +21,20 @@ enum SumobitMotorChannel2 {
 
 namespace sumobit {
 
-    let bgFunctionCreated = false;
+const MOTORCURRENT_EVENT_SOURCE = 0x02;
 
-    // Event type.
-    let eventType = 0;
+let bgFunctionCreated = false;
 
-    // Array for mode value.
-    let thresholdsArray: number[] = [];
-    let compareTypesArray: SumobitCompareType[] = [];
-    let motorArray: SumobitMotorChannel[] = [];
+// Event type.
+let eventType = 0;
 
-    // Array for old compare result.
-    let oldCompareResult: boolean[] = [];
+// Array for mode value.
+let thresholdsArray: number[] = [];
+let compareTypesArray: SumobitCompareType[] = [];
+let motorArray: SumobitMotorChannel[] = [];
+
+// Array for old compare result.
+let oldCompareResult: boolean[] = [];
 
 
     /**

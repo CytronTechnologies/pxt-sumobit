@@ -6,6 +6,8 @@
  * Email:   support@cytron.io
  *******************************************************************************/
 
+
+
 // Preset RGB Colors for the selection gridpicker
 enum SumobitRgbColors {
     //% block=red
@@ -29,7 +31,6 @@ enum SumobitRgbColors {
     //% block=black
     Black = 0x000000
 }
-
 
 
 namespace sumobit {

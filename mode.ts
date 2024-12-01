@@ -5,20 +5,23 @@
  * Website: http://www.cytron.io
  * Email:   support@cytron.io
  *******************************************************************************/
-const MODE_EVENT_SOURCE = 0x01;
+
+
 
 namespace sumobit {
 
-    let bgFunctionCreated = false;
+const MODE_EVENT_SOURCE = 0x01;
 
-    // Event type.
-    let eventType = 0;
+let bgFunctionCreated = false;
 
-    // Array for mode value.
-    let modevalueArray: number[] = [];
+// Event type.
+let eventType = 0;
 
-    // Array for old compare result.
-    let oldCompareResult: boolean[] = [];
+// Array for mode value.
+let modevalueArray: number[] = [];
+
+// Array for old compare result.
+let oldCompareResult: boolean[] = [];
 
 
     /**

@@ -6,6 +6,8 @@
  * Email:   support@cytron.io
  *******************************************************************************/
 
+
+
 // Used in opponent sensor return value block
 enum SumobitSensorSelection1 {
     //% block="left"
@@ -48,6 +50,7 @@ enum SumobitSensorSelection2 {
     //% block="none"
     None = 6
 }
+
 
 namespace sumobit {
 

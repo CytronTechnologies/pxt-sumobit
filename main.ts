@@ -3,7 +3,7 @@
  */
 
 // I2C slave address for RP2040
-const I2C_ADDRESS = 0x09;
+const SUMOBIT_I2C_ADDRESS = 0x09;
 
 // I2C register addresses
 const REG_ADD_REVISION = 0;
@@ -51,6 +51,7 @@ const REG_ADD_RESET = 36;
 //% weight=10 color=#ff8000 icon="\uf091" block="SUMO:BIT"
 //% groups=['DC Motors', 'Servos' , 'Mode', 'Motor Current','Opponent Sensors' , 'Edge Sensors', 'RGB LED']
 namespace sumobit {
+
     
     // Stop all motor initially
     sumobit.i2cWrite(REG_ADD_PWM1, 0);
@@ -88,8 +89,8 @@ namespace sumobit {
     //% blockId=sumobit_i2c_read
     export function i2cRead(register: number): number {
         let value = 0;
-        pins.i2cWriteNumber(I2C_ADDRESS, register, NumberFormat.UInt8LE, true);
-        value = pins.i2cReadNumber(I2C_ADDRESS, NumberFormat.UInt8LE);
+        pins.i2cWriteNumber(SUMOBIT_I2C_ADDRESS, register, NumberFormat.UInt8LE, true);
+        value = pins.i2cReadNumber(SUMOBIT_I2C_ADDRESS, NumberFormat.UInt8LE);
         return value;
     }
 
@@ -105,7 +106,7 @@ namespace sumobit {
         let buffer = pins.createBuffer(2);
         buffer[0] = register;
         buffer[1] = data;
-        pins.i2cWriteBuffer(I2C_ADDRESS, buffer);
+        pins.i2cWriteBuffer(SUMOBIT_I2C_ADDRESS, buffer);
     }
 
 

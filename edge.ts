@@ -6,18 +6,7 @@
  * Email:   support@cytron.io
  *******************************************************************************/
 
-// Default pin.
-const EDGE_R_PIN = AnalogPin.P0;
-const EDGE_L_PIN = AnalogPin.P1;
 
-// Event source.
-const EDGE_SENSOR_EVENT_SOURCE = 0x03;
-
-let sumobitRightThreshold: number;
-let sumobitLeftThreshold: number;
-
-let sumobitRightEdgeValue: number;
-let sumobitLeftEdgeValue: number;
 
 // Edge sensor selection
 enum SumobitEdgeSelection {
@@ -25,7 +14,6 @@ enum SumobitEdgeSelection {
     Right = 0,
     //% block="left"
     Left = 1,
-
     //% block="both"
     //% blockHidden=true
     Both = 1000
@@ -35,16 +23,23 @@ enum SumobitEdgeSelection {
 enum SumobitCompareType {
     //% block=">"
     MoreThan = 0,
-
     //% block="<"
     LessThan = 1
 };
 
 
 namespace sumobit {
-
+    // Default pin.
+    const EDGE_R_PIN = AnalogPin.P0;
+    const EDGE_L_PIN = AnalogPin.P1;
+    // Event source.
+    const EDGE_SENSOR_EVENT_SOURCE = 0x03;
+    let rightThreshold: number;
+    let leftThreshold: number;
+    let rightEdgeValue: number;
+    let leftEdgeValue: number;
     /**
-      * Read the right edge sensor value (0-1023).
+      * Returns the right edge sensor value (0-1023).
       */
     //% group="Edge Sensors"
     //% weight=79
@@ -53,12 +48,11 @@ namespace sumobit {
     //% block="right edge sensor"
     //% blockHidden=true
     export function readRightEdgeValue(): number {
-        sumobitRightEdgeValue = pins.analogReadPin(EDGE_R_PIN);
+        rightEdgeValue = pins.analogReadPin(EDGE_R_PIN);
         return pins.analogReadPin(EDGE_R_PIN);
     }
-
     /**
-      * Read the left edge sensor value (0-1023).
+      * Returns the left edge sensor value (0-1023).
       */
     //% group="Edge Sensors"
     //% weight=78
@@ -67,12 +61,12 @@ namespace sumobit {
     //% block="left edge sensor"
     //% blockHidden=true
     export function readLeftEdgeValue(): number {
-        sumobitLeftEdgeValue = pins.analogReadPin(EDGE_L_PIN);
-        return sumobitLeftEdgeValue;
+        leftEdgeValue = pins.analogReadPin(EDGE_L_PIN);
+        return leftEdgeValue;
     }
-
     /**
-      * Return the edge sensor value (0-1023).
+      * Returns the edge sensor value (0-1023).
+      * @param edge Left or right sensor. eg: SumobitEdgeSelection.Right
       */
     //% group="Edge Sensors"
     //% weight=77
@@ -80,7 +74,6 @@ namespace sumobit {
     //% blockId=sumobit_edge_return_value
     //% block="%edge edge sensor"
     export function fetchEdgeValue(edge: SumobitEdgeSelection): number {
-
         switch (edge) {
             case SumobitEdgeSelection.Right:
                 return readRightEdgeValue();
@@ -90,13 +83,13 @@ namespace sumobit {
                 return readRightEdgeValue();
         }
     }
-
     /**
-    * Compare the edge sensor value (0-1023) with certain value and return true if condition is meet.
-    * @param EdgeSide Which side of edge sensors are to compare to. eg: 0
-    * @param compareType More than or less than. eg: 0
-    * @param threshold The value to compare with. eg: 512
-    */
+    * Compare the edge sensor value (0-1023) with certain value and return true 
+if condition is meet.
+ * @param EdgeSide Which side of edge sensors are to compare to. eg: 0
+ * @param compareType More than or less than. eg: 0
+ * @param threshold The value to compare with. eg: 512
+ */
     //% group="Edge Sensors"
     //% weight=76
     //% blockGap=40
@@ -104,34 +97,34 @@ namespace sumobit {
     //% block="%edge edge sensor %compareType %threshold"
     //% threshold.min=0 threshold.max=1023
     //% blockHidden=true
-    export function compareEdgeDefined(edge: SumobitEdgeSelection, compareType: SumobitCompareType, threshold: number,): boolean {
-
+    export function compareEdgeDefined(edge: SumobitEdgeSelection, compareType:
+        SumobitCompareType, threshold: number,): boolean {
         let result = false;
         let R = readRightEdgeValue();
         let L = readLeftEdgeValue();
-
         switch (edge) {
             case SumobitEdgeSelection.Right:
-                if ((R > threshold && SumobitCompareType.MoreThan) || (R < threshold && SumobitCompareType.LessThan)) {
+                if ((R > threshold && SumobitCompareType.MoreThan) || (R <
+                    threshold && SumobitCompareType.LessThan)) {
                     result = true;
                 }
                 break;
-
             case SumobitEdgeSelection.Left:
-                if ((L > threshold && SumobitCompareType.MoreThan) || (L < threshold && SumobitCompareType.LessThan)) {
+                if ((L > threshold && SumobitCompareType.MoreThan) || (L <
+                    threshold && SumobitCompareType.LessThan)) {
                     result = true;
                 }
                 break;
-
             case SumobitEdgeSelection.Both:
-                if (((R > threshold && L > threshold) && SumobitCompareType.MoreThan) || ((R > threshold && L > threshold) && SumobitCompareType.LessThan)) {
+                if (((R > threshold && L > threshold) &&
+                    SumobitCompareType.MoreThan) || ((R > threshold && L > threshold) &&
+                        SumobitCompareType.LessThan)) {
                     result = true;
                 }
                 break;
         }
         return result;
     }
-
     /**
     * Edge threshold auto calibration.
     * @param coefficient Threshold calibration ratio. eg: 5
@@ -140,21 +133,15 @@ namespace sumobit {
     //% weight=75
     //% blockGap=8
     //% blockId=sumobit_edge_calibrate_threshold
-    //% block="set edge sensor threshold|| - coefficient:%coefficient"
+    //% block="set edge sensor threshold||  coefficient:%coefficient"
     //% coefficient.min=1 coefficient.max=9
-    
-    
-    export function calibrateEdgeThreshold(coefficient:number=5): void {
-    
-
-    sumobitRightThreshold = pins.analogReadPin(EDGE_R_PIN) * (coefficient*0.1);
-    sumobitLeftThreshold = pins.analogReadPin(EDGE_L_PIN) * (coefficient *0.1);
-    
-    
-}
-
+    export function calibrateEdgeThreshold(coefficient: number = 5): void {
+        rightThreshold = pins.analogReadPin(EDGE_R_PIN) * (coefficient * 0.1);
+        leftThreshold = pins.analogReadPin(EDGE_L_PIN) * (coefficient * 0.1);
+    }
     /**
-    * Return the calibrated edge threshold in seriel monitor for troubleshooting purpose.
+    * Return the calibrated edge threshold in seriel monitor for troubleshooting
+    purpose.
     */
     //% group="Edge Sensors"
     //% weight=74
@@ -163,14 +150,12 @@ namespace sumobit {
     //% block="calibrated edge threshold"
     //% blockHidden=true
     export function fetchCalibratedEdgeThreshold(): void {
-    serial.writeString("Left: ")
-    serial.writeNumber(sumobitLeftThreshold)
-    serial.writeString(" Right: ")
-    serial.writeNumber(sumobitRightThreshold)
-    serial.writeLine("")
-
-}
-
+        serial.writeString("Left: ")
+        serial.writeNumber(leftThreshold)
+        serial.writeString(" Right: ")
+        serial.writeNumber(rightThreshold)
+        serial.writeLine("")
+    }
     /**
     * Compare.
     */
@@ -180,23 +165,20 @@ namespace sumobit {
     //% blockId=sumobit_edge_compare_calibrated_value
     //% block="%edge sensor detect edge"
     export function compareEdgeCalibrated(edge: SumobitEdgeSelection): boolean {
-    
-    let result = false;
-    switch (edge) {
-        case SumobitEdgeSelection.Right:
-            if (readRightEdgeValue() < sumobitRightThreshold) {
-                result = true;
-            }
-            break;
-
-        case SumobitEdgeSelection.Left:
-            if (readLeftEdgeValue() < sumobitLeftThreshold) {
-                result = true;
-            }
-            break;
+        let result = false;
+        switch (edge) {
+            case SumobitEdgeSelection.Right:
+                if (readRightEdgeValue() < rightThreshold) {
+                    result = true;
+                }
+                break;
+            case SumobitEdgeSelection.Left:
+                if (readLeftEdgeValue() < leftThreshold) {
+                    result = true;
+                }
+                break;
+        }
+        return result;
     }
-    return result;
-
-    }
-
 }
+
