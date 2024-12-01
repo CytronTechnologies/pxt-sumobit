@@ -168,7 +168,7 @@ let searchMillis = control.millis();
     /**
     * Robot search routine
     * @param mode The search mode. eg: SumobitSearch.0
-    * @param speed Motor speed when Front Centre sensor detects opponent (0-255). eg: 120
+    * @param speed Motor speed while searching for opponent. eg: 120
     * @param acceleration Motor acceleration factor (1-9). eg: 9
     */
     //% group="Robot Kit"

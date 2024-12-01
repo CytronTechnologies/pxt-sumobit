@@ -17,7 +17,7 @@ enum SumobitServoChannel {
     //% block="servo 2"
     Servo2 = 2,
 
-    //% block="all"
+    //% block="all servos"
     All = 1000,
 };
 
@@ -32,7 +32,7 @@ namespace sumobit{
     //% weight=38
     //% blockGap=8
     //% blockId=sumobit_servo_disable
-    //% block="disable servo %servo"
+    //% block="disable %servo"
     //% servo.defl=1
     export function disableServo(servo: SumobitServoChannel): void {
 

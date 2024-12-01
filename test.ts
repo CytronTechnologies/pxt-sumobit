@@ -1,5 +1,6 @@
-// tests go here; this will not be compiled when this package is used as a library
-
+/**
+ * tests go here; this will not be compiled when this package is used as a library
+ */
 function inputSerialDisplay() {
     serial.writeString("OPP: ")
     serial.writeNumber(sumobit.oppSensorValue(SumobitSensorSelection1.Left))
@@ -9,9 +10,9 @@ function inputSerialDisplay() {
     serial.writeNumber(sumobit.oppSensorValue(SumobitSensorSelection1.Right))
     serial.writeString(" | ")
     serial.writeString("EDGE_R: ")
-    serial.writeNumber(sumobit.readRightEdgeValue())
+    serial.writeNumber(sumobit.fetchEdgeValue(SumobitEdgeSelection.Right))
     serial.writeString(" EDGE_L: ")
-    serial.writeNumber(sumobit.readLeftEdgeValue())
+    serial.writeNumber(sumobit.fetchEdgeValue(SumobitEdgeSelection.Left))
     serial.writeString(" | ")
     serial.writeString("")
     serial.writeString("Mode: ")
@@ -22,20 +23,22 @@ function inputSerialDisplay() {
     serial.writeLine("")
     basic.pause(100)
 }
-sumobit.calibrateEdgeThreshold()
-sumobit.setSpeed(100)
+sumobit.calibrateEdgeThreshold(5)
 sumobit.setAllRgbPixelsColor(0xff0000)
+sumobit.disableServo(SumobitServoChannel.All)
 basic.pause(100)
-sumobit.setRgbPixelColor(0, 0x00ff00)
-sumobit.setRgbPixelColor(1, sumobit.rgb(0, 0, 255))
+sumobit.setRgbPixelColor(0, sumobit.rgb(0, 0, 255))
+sumobit.setRgbPixelColor(1, 0x00ffff)
+sumobit.setServoPosition(SumobitServoChannel.Servo1, 90, 9)
 basic.pause(100)
 sumobit.clearAllRgbPixels()
 sumobit.countdown(SumobitCountdown.Three)
 sumobit.setMotorsSpeed(100, 100, 9)
+sumobit.setServoPosition(SumobitServoChannel.Servo2, 90, 9)
 basic.pause(500)
-sumobit.stopMotor(SumobitMotorChannel.Both)
 sumobit.runMotor(SumobitMotorChannel.RightMotor, SumobitMotorDirection.Forward, 128, 9)
 sumobit.runMotor(SumobitMotorChannel.RightMotor, SumobitMotorDirection.Backward, 128, 9)
+sumobit.setServoPosition(SumobitServoChannel.Servo2, 180, 9)
 basic.pause(300)
 sumobit.stopMotor(SumobitMotorChannel.Both)
 let StartVar = 1
@@ -44,27 +47,6 @@ basic.forever(function () {
     inputSerialDisplay()
     if (StartVar == 1) {
         if (sumobit.checkMode(1)) {
-            sumobit.backoff(SumobitDirection.Right)
-        } else {
-
-        }
-        if (sumobit.checkMode(2)) {
-            sumobit.attack(0,9)
-        } else {
-
-        }
-        if (sumobit.checkMode(3)) {
-            if (sumobit.compareEdgeCalibrated(SumobitEdgeSelection.Right)) {
-                sumobit.setRgbPixelColor(1, 0xffffff)
-            } else if (sumobit.compareEdgeCalibrated(SumobitEdgeSelection.Left)) {
-                sumobit.setRgbPixelColor(0, 0xffffff)
-            } else {
-                sumobit.clearAllRgbPixels()
-            }
-        } else {
-
-        }
-        if (sumobit.checkMode(4)) {
             if (sumobit.oppSensorDetection(SumobitSensorSelection2.Left)) {
                 basic.showLeds(`
                     # . . . .
@@ -108,6 +90,31 @@ basic.forever(function () {
             } else {
                 basic.clearScreen()
             }
+        } else {
+
+        }
+        if (sumobit.checkMode(2)) {
+            sumobit.attack(0, 9)
+        } else {
+
+        }
+        if (sumobit.checkMode(3)) {
+            if (sumobit.compareEdgeCalibrated(SumobitEdgeSelection.Right)) {
+                sumobit.setRgbPixelColor(1, 0xff0000)
+                basic.pause(500)
+                sumobit.backoff(SumobitDirection.Left, 50, 9)
+            } else if (sumobit.compareEdgeCalibrated(SumobitEdgeSelection.Left)) {
+                sumobit.setRgbPixelColor(0, 0xff0000)
+                basic.pause(500)
+                sumobit.backoff(SumobitDirection.Right, 50, 9)
+            } else {
+                sumobit.clearAllRgbPixels()
+            }
+        } else {
+
+        }
+        if (sumobit.checkMode(4)) {
+            sumobit.search(SumobitSearch.Normal, 50, 9)
         } else {
 
         }

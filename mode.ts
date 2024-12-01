@@ -49,10 +49,10 @@ let oldCompareResult: boolean[] = [];
     //% block="mode %mode"
     //% mode.min=0 mode.max=15
     //% mode.defl=7
-    export function checkMode(modevalue: number): boolean {
+    export function checkMode(mode: number): boolean {
         let result = false;
 
-        if (readModeValue() === modevalue) {
+        if (readModeValue() === mode) {
             result = true;
         }
         return result;
