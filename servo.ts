@@ -66,7 +66,7 @@ namespace sumobit{
     //% servo.defl=1
     //% position.min=0 position.max=180
     //% position.defl=90
-    //% speed.min=0 position.max=180
+    //% speed.min=0 speed.max=180
     //% speed.defl=9
     export function setServoPosition(servo: SumobitServoChannel, position: number, speed:number=9): void {
         position = sumobit.limit(position, 0, 180);
