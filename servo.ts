@@ -33,7 +33,7 @@ namespace sumobit{
     //% blockGap=8
     //% blockId=sumobit_servo_disable
     //% block="disable %servo"
-    //% servo.defl=1
+    //% servo.defl=SumobitServoChannel.Servo1
     export function disableServo(servo: SumobitServoChannel): void {
 
         switch (servo) {
@@ -63,7 +63,7 @@ namespace sumobit{
     //% blockGap=8
     //% blockId=sumobit_servo_set_position
     //% block="set %servo position to %position \\° || at speed:%speed"
-    //% servo.defl=1
+    //% servo.defl= SumobitServoChannel.Servo1
     //% position.min=0 position.max=180
     //% position.defl=90
     //% speed.min=0 speed.max=180

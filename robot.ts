@@ -65,7 +65,7 @@ let searchMillis = control.millis();
     //% blockGap=8
     //% blockId="sumobit_robot_countdown"
     //% block="start countdown %second"
-    //% second.defl=5
+    //% second.defl=SumobitCountdown.Five
     //% second.fieldOptions.decompileLiterals=true
     //% subcategory="Robot Kit"
     export function countdown(second: SumobitCountdown): void {
@@ -89,7 +89,7 @@ let searchMillis = control.millis();
     //% blockId="sumobit_robot_backoff"
     //% block="backoff %direction speed:%speed || acceleration:%acceleration"
     //% expandableArgumentMode="toggle"
-    //% direction.defl=1
+    //% direction.defl=SumobitDirection.Right
     //% speed.min=0 speed.max=255
     //% speed.defl=120
     //% acceleration.min=1 acceleration.max=9
@@ -167,7 +167,7 @@ let searchMillis = control.millis();
 
     /**
     * Robot search routine
-    * @param mode The search mode. eg: SumobitSearch.0
+    * @param mode The search mode. eg: SumobitSearch.Normal
     * @param speed Motor speed while searching for opponent. eg: 120
     * @param acceleration Motor acceleration factor (1-9). eg: 9
     */
@@ -176,7 +176,7 @@ let searchMillis = control.millis();
     //% blockGap=8
     //% blockId="sumobit_robot_search"
     //% block="search %mode speed:%speed || acceleration:%acceleration"
-    //% mode.defl=0
+    //% mode.defl= SumobitSearch.Normal
     //% speed.min=0 speed.max=255
     //% speed.defl=120
     //% acceleration.min=1 acceleration.max=9

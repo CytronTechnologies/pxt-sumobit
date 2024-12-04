@@ -43,10 +43,6 @@ enum SumobitSensorSelection2 {
     //% block="right"
     Right = 4,
 
-    //% block="all"
-    //% blockHidden=true
-    All = 5,
-
     //% block="none"
     None = 6
 }
@@ -64,7 +60,7 @@ namespace sumobit {
     //% blockGap=8
     //% blockId=sumobit_maker_object_read_digital
     //% block="%sensor opponent sensor"
-    //% sensor.defl=4
+    //% sensor.defl=SumobitSensorSelection1.Right
     //% position.fieldEditor="gridpicker" position.fieldOptions.columns=5
     export function oppSensorValue(sensor: SumobitSensorSelection1): number {
 
@@ -93,62 +89,46 @@ namespace sumobit {
 
     /**
      * Returns true if the opponent sensor is low (Obstacle detected).
-     * @param sensor The opponent sensor to read (Left, Front Left, Center, Front Right, Right). eg: SumobitSensorSelection2.Right
+     * @param position The opponent sensor to read (Left, Front Left, Center, Front Right, Right). eg: SumobitSensorSelection2.Right
      */
     //% group="Opponent Sensors"
     //% weight=88
     //% blockGap=8
     //% blockId=sumobit_maker_object_detect_opponent
     //% block="%position sensor detect opponent"
-    //% position.defl = 4
+    //% position.defl=SumobitSensorSelection2.Right
     export function oppSensorDetection(position: SumobitSensorSelection2): boolean {
 
-
-
+        let result = false;
         let L = oppSensorValue(0);
         let FL = oppSensorValue(1);
         let FC = oppSensorValue(2);
         let FR = oppSensorValue(3);
         let R = oppSensorValue(4);
+        
 
         switch (position) {
-            case SumobitSensorSelection2.None:
-                if (L == 1 && FL == 1 && FC == 1 && FR == 1 && R == 1)
-                    return true;
-                else return false;
-
             case SumobitSensorSelection2.Left:
-                if (L == 0)
-                    return true;
-                else return false;
+                return L == 0;
 
             case SumobitSensorSelection2.FrontLeft:
-                if (FL == 0)
-                    return true;
-                else return false;
+                return FL == 0;
 
             case SumobitSensorSelection2.Center:
-                if (FC == 0)
-                    return true;
-                else return false;
+                return FC == 0;
 
             case SumobitSensorSelection2.FrontRight:
-                if (FR == 0)
-                    return true;
-                else return false;
+                return FR == 0;
 
             case SumobitSensorSelection2.Right:
-                if (R == 0)
-                    return true;
-                else return false;
+                return R == 0;
 
-            case SumobitSensorSelection2.All:
-                if (L == 0 && FL == 0 && FC == 0 && FR == 0 && R == 0)
-                    return true;
-                else return false;
+            case SumobitSensorSelection2.None:
+                return L == 1 && FL == 1 && FC == 1 && FR == 1 && R == 1;
+
+            default:
+                return false;
         }
-
-        return false;
     }
 
     /**

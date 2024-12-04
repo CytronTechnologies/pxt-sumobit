@@ -75,7 +75,7 @@ namespace sumobit {
     //% blockGap=8
     //% blockId=sumobit_edge_return_value
     //% block="%edge edge sensor"
-    //% edge.defl=0
+    //% edge.defl=SumobitEdgeSelection.Right
     export function fetchEdgeValue(edge: SumobitEdgeSelection): number {
         switch (edge) {
             case SumobitEdgeSelection.Right:
@@ -169,7 +169,7 @@ namespace sumobit {
     //% blockGap=8
     //% blockId=sumobit_edge_compare_calibrated_value
     //% block="%edge sensor detect edge"
-    //% edge.defl=0
+    //% edge.defl=SumobitEdgeSelection.Right
     export function compareEdgeCalibrated(edge: SumobitEdgeSelection): boolean {
         let result = false;
         switch (edge) {

@@ -41,7 +41,7 @@ namespace sumobit {
     //% blockGap=8
     //% blockId=sumobit_motor_stop
     //% block="stop %motor motor"
-    //% motor.defl=1000
+    //%  motor.defl=SumobitMotorChannel.Both
     export function stopMotor(motor: SumobitMotorChannel): void {
         switch (motor) {
             case SumobitMotorChannel.RightMotor:
@@ -78,8 +78,8 @@ namespace sumobit {
     //% accel.fieldOptions.label="Acceleration Factor"
     //% block="run %motor motor %direction at %speed speed || with %acceleration acceleration factor"
     //% inlineInputMode=inline
-    //% motor.defl=0
-    //% direction.defl=1000
+    //% motor.defl=SumobitMotorChannel.Both
+    //% direction.defl=SumobitMotorDirection.Forward
     //% speed.min=0 speed.max=255
     //% speed.defl=120
     //% acceleration.min=1 acceleration.max=9
