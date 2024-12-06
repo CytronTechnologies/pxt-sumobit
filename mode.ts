@@ -35,7 +35,7 @@ let oldCompareResult: boolean[] = [];
     //% blockId=sumobit_mode_read_value
     //% block="mode"
     export function readModeValue(): number {
-        return sumobit.i2cRead(REG_ADD_DIP);
+        return sumobit.i2cRead(SUMOBIT_REG_ADD_DIP);
     }
 
     /**

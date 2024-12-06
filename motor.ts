@@ -45,20 +45,20 @@ namespace sumobit {
     export function stopMotor(motor: SumobitMotorChannel): void {
         switch (motor) {
             case SumobitMotorChannel.RightMotor:
-                sumobit.i2cWrite(REG_ADD_PWM1, 0);
-                sumobit.i2cWrite(REG_ADD_DIR1, 0);
+                sumobit.i2cWrite(SUMOBIT_REG_ADD_PWM1, 0);
+                sumobit.i2cWrite(SUMOBIT_REG_ADD_DIR1, 0);
                 break;
 
             case SumobitMotorChannel.LeftMotor:
-                sumobit.i2cWrite(REG_ADD_PWM2, 0);
-                sumobit.i2cWrite(REG_ADD_DIR2, 0);
+                sumobit.i2cWrite(SUMOBIT_REG_ADD_PWM2, 0);
+                sumobit.i2cWrite(SUMOBIT_REG_ADD_DIR2, 0);
                 break;
 
             case SumobitMotorChannel.Both:
-                sumobit.i2cWrite(REG_ADD_PWM1, 0);
-                sumobit.i2cWrite(REG_ADD_DIR1, 0);
-                sumobit.i2cWrite(REG_ADD_PWM2, 0);
-                sumobit.i2cWrite(REG_ADD_DIR2, 0);
+                sumobit.i2cWrite(SUMOBIT_REG_ADD_PWM1, 0);
+                sumobit.i2cWrite(SUMOBIT_REG_ADD_DIR1, 0);
+                sumobit.i2cWrite(SUMOBIT_REG_ADD_PWM2, 0);
+                sumobit.i2cWrite(SUMOBIT_REG_ADD_DIR2, 0);
                 break;
         }
     }
@@ -92,46 +92,46 @@ namespace sumobit {
         switch (motor) {
             case SumobitMotorChannel.RightMotor:
                 if (direction == SumobitMotorDirection.Forward) {
-                    sumobit.i2cWrite(REG_ADD_PWM1, speed);
-                    sumobit.i2cWrite(REG_ADD_DIR1, 0);
-                    sumobit.i2cWrite(REG_ADD_ACCEL1, acceleration);
+                    sumobit.i2cWrite(SUMOBIT_REG_ADD_PWM1, speed);
+                    sumobit.i2cWrite(SUMOBIT_REG_ADD_DIR1, 0);
+                    sumobit.i2cWrite(SUMOBIT_REG_ADD_ACCEL1, acceleration);
                 }
                 else {
-                    sumobit.i2cWrite(REG_ADD_PWM1, speed);
-                    sumobit.i2cWrite(REG_ADD_DIR1, 1);
-                    sumobit.i2cWrite(REG_ADD_ACCEL1, acceleration);
+                    sumobit.i2cWrite(SUMOBIT_REG_ADD_PWM1, speed);
+                    sumobit.i2cWrite(SUMOBIT_REG_ADD_DIR1, 1);
+                    sumobit.i2cWrite(SUMOBIT_REG_ADD_ACCEL1, acceleration);
                 }
                 break;
 
             case SumobitMotorChannel.LeftMotor:
                 if (direction == SumobitMotorDirection.Forward) {
-                    sumobit.i2cWrite(REG_ADD_PWM2, speed);
-                    sumobit.i2cWrite(REG_ADD_DIR2, 0);
-                    sumobit.i2cWrite(REG_ADD_ACCEL2, acceleration);
+                    sumobit.i2cWrite(SUMOBIT_REG_ADD_PWM2, speed);
+                    sumobit.i2cWrite(SUMOBIT_REG_ADD_DIR2, 0);
+                    sumobit.i2cWrite(SUMOBIT_REG_ADD_ACCEL2, acceleration);
                 }
                 else {
-                    sumobit.i2cWrite(REG_ADD_PWM2, speed);
-                    sumobit.i2cWrite(REG_ADD_DIR2, 1);
-                    sumobit.i2cWrite(REG_ADD_ACCEL2, acceleration);
+                    sumobit.i2cWrite(SUMOBIT_REG_ADD_PWM2, speed);
+                    sumobit.i2cWrite(SUMOBIT_REG_ADD_DIR2, 1);
+                    sumobit.i2cWrite(SUMOBIT_REG_ADD_ACCEL2, acceleration);
                 }
                 break;
 
             case SumobitMotorChannel.Both:
                 if (direction == SumobitMotorDirection.Forward) {
-                    sumobit.i2cWrite(REG_ADD_PWM1, speed);
-                    sumobit.i2cWrite(REG_ADD_DIR1, 0);
-                    sumobit.i2cWrite(REG_ADD_ACCEL1, acceleration);
-                    sumobit.i2cWrite(REG_ADD_PWM2, speed);
-                    sumobit.i2cWrite(REG_ADD_DIR2, 0);
-                    sumobit.i2cWrite(REG_ADD_ACCEL2, acceleration);
+                    sumobit.i2cWrite(SUMOBIT_REG_ADD_PWM1, speed);
+                    sumobit.i2cWrite(SUMOBIT_REG_ADD_DIR1, 0);
+                    sumobit.i2cWrite(SUMOBIT_REG_ADD_ACCEL1, acceleration);
+                    sumobit.i2cWrite(SUMOBIT_REG_ADD_PWM2, speed);
+                    sumobit.i2cWrite(SUMOBIT_REG_ADD_DIR2, 0);
+                    sumobit.i2cWrite(SUMOBIT_REG_ADD_ACCEL2, acceleration);
                 }
                 else {
-                    sumobit.i2cWrite(REG_ADD_PWM1, speed);
-                    sumobit.i2cWrite(REG_ADD_DIR1, 1);
-                    sumobit.i2cWrite(REG_ADD_ACCEL1, acceleration);
-                    sumobit.i2cWrite(REG_ADD_PWM2, speed);
-                    sumobit.i2cWrite(REG_ADD_DIR2, 1);
-                    sumobit.i2cWrite(REG_ADD_ACCEL2, acceleration);
+                    sumobit.i2cWrite(SUMOBIT_REG_ADD_PWM1, speed);
+                    sumobit.i2cWrite(SUMOBIT_REG_ADD_DIR1, 1);
+                    sumobit.i2cWrite(SUMOBIT_REG_ADD_ACCEL1, acceleration);
+                    sumobit.i2cWrite(SUMOBIT_REG_ADD_PWM2, speed);
+                    sumobit.i2cWrite(SUMOBIT_REG_ADD_DIR2, 1);
+                    sumobit.i2cWrite(SUMOBIT_REG_ADD_ACCEL2, acceleration);
                 }
                 break;
         }

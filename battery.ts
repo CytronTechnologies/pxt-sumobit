@@ -19,8 +19,8 @@ namespace sumobit {
     export function readBatteryValue(): number {
         let highByte: number;
         let lowByte: number;
-        highByte = sumobit.i2cRead(REG_ADD_VIN_HIGH);
-        lowByte = sumobit.i2cRead(REG_ADD_VIN_LOW);
+        highByte = sumobit.i2cRead(SUMOBIT_REG_ADD_VIN_HIGH);
+        lowByte = sumobit.i2cRead(SUMOBIT_REG_ADD_VIN_LOW);
         return ((highByte << 8) | lowByte) / 100;
     }
 }

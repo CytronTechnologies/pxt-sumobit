@@ -73,20 +73,20 @@ namespace sumobit{
 
         switch (servo) {
             case SumobitServoChannel.Servo1:
-                sumobit.i2cWrite(REG_ADD_SRV1_POS, position);
-                sumobit.i2cWrite(REG_ADD_SRV1_SPEED, speed);
+                sumobit.i2cWrite(SUMOBIT_REG_ADD_SRV1_POS, position);
+                sumobit.i2cWrite(SUMOBIT_REG_ADD_SRV1_SPEED, speed);
                 break;
 
             case SumobitServoChannel.Servo2:
-                sumobit.i2cWrite(REG_ADD_SRV2_POS, position);
-                sumobit.i2cWrite(REG_ADD_SRV2_SPEED, speed);
+                sumobit.i2cWrite(SUMOBIT_REG_ADD_SRV2_POS, position);
+                sumobit.i2cWrite(SUMOBIT_REG_ADD_SRV2_SPEED, speed);
                 break;
 
             case SumobitServoChannel.All:
-                sumobit.i2cWrite(REG_ADD_SRV1_POS, position);
-                sumobit.i2cWrite(REG_ADD_SRV2_POS, position);
-                sumobit.i2cWrite(REG_ADD_SRV1_SPEED, speed);
-                sumobit.i2cWrite(REG_ADD_SRV2_SPEED, speed);
+                sumobit.i2cWrite(SUMOBIT_REG_ADD_SRV1_POS, position);
+                sumobit.i2cWrite(SUMOBIT_REG_ADD_SRV2_POS, position);
+                sumobit.i2cWrite(SUMOBIT_REG_ADD_SRV1_SPEED, speed);
+                sumobit.i2cWrite(SUMOBIT_REG_ADD_SRV2_SPEED, speed);
                 break;
         }
     }

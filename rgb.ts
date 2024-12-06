@@ -45,13 +45,13 @@ namespace sumobit {
     //% block="clear all RGB pixels"
     export function clearAllRgbPixels(): void {
 
-        sumobit.i2cWrite(REG_ADD_R0, 0);
-        sumobit.i2cWrite(REG_ADD_G0, 0);
-        sumobit.i2cWrite(REG_ADD_B0, 0);
+        sumobit.i2cWrite(SUMOBIT_REG_ADD_R0, 0);
+        sumobit.i2cWrite(SUMOBIT_REG_ADD_G0, 0);
+        sumobit.i2cWrite(SUMOBIT_REG_ADD_B0, 0);
 
-        sumobit.i2cWrite(REG_ADD_R1, 0);
-        sumobit.i2cWrite(REG_ADD_G1, 0);
-        sumobit.i2cWrite(REG_ADD_B1, 0);
+        sumobit.i2cWrite(SUMOBIT_REG_ADD_R1, 0);
+        sumobit.i2cWrite(SUMOBIT_REG_ADD_G1, 0);
+        sumobit.i2cWrite(SUMOBIT_REG_ADD_B1, 0);
 
     }
 
@@ -89,13 +89,13 @@ namespace sumobit {
         let green = (color >> 8) & 0xFF;  // Shift right by 8 bits and mask with 0xFF
         let blue = color & 0xFF;
 
-        sumobit.i2cWrite(REG_ADD_R0, red);
-        sumobit.i2cWrite(REG_ADD_G0, green);
-        sumobit.i2cWrite(REG_ADD_B0, blue);
+        sumobit.i2cWrite(SUMOBIT_REG_ADD_R0, red);
+        sumobit.i2cWrite(SUMOBIT_REG_ADD_G0, green);
+        sumobit.i2cWrite(SUMOBIT_REG_ADD_B0, blue);
 
-        sumobit.i2cWrite(REG_ADD_R1, red);
-        sumobit.i2cWrite(REG_ADD_G1, green);
-        sumobit.i2cWrite(REG_ADD_B1, blue);
+        sumobit.i2cWrite(SUMOBIT_REG_ADD_R1, red);
+        sumobit.i2cWrite(SUMOBIT_REG_ADD_G1, green);
+        sumobit.i2cWrite(SUMOBIT_REG_ADD_B1, blue);
 
     }
 
@@ -126,15 +126,15 @@ namespace sumobit {
 
         switch (pixel) {
             case 0:
-                sumobit.i2cWrite(REG_ADD_R0, red);
-                sumobit.i2cWrite(REG_ADD_G0, green);
-                sumobit.i2cWrite(REG_ADD_B0, blue);
+                sumobit.i2cWrite(SUMOBIT_REG_ADD_R0, red);
+                sumobit.i2cWrite(SUMOBIT_REG_ADD_G0, green);
+                sumobit.i2cWrite(SUMOBIT_REG_ADD_B0, blue);
                 break;
 
             case 1:
-                sumobit.i2cWrite(REG_ADD_R1, red);
-                sumobit.i2cWrite(REG_ADD_G1, green);
-                sumobit.i2cWrite(REG_ADD_B1, blue);
+                sumobit.i2cWrite(SUMOBIT_REG_ADD_R1, red);
+                sumobit.i2cWrite(SUMOBIT_REG_ADD_G1, green);
+                sumobit.i2cWrite(SUMOBIT_REG_ADD_B1, blue);
                 break;
 
         }

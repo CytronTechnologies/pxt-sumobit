@@ -51,8 +51,8 @@ let oldCompareResult: boolean[] = [];
     export function readRightMotorCurrentValue(): number {
         let highByte: number;
         let lowByte: number;
-        highByte = sumobit.i2cRead(REG_ADD_AN1_HIGH);
-        lowByte = sumobit.i2cRead(REG_ADD_AN1_LOW);
+        highByte = sumobit.i2cRead(SUMOBIT_REG_ADD_AN1_HIGH);
+        lowByte = sumobit.i2cRead(SUMOBIT_REG_ADD_AN1_LOW);
         return ((highByte << 8) | lowByte) / 100;
     }
 
@@ -68,8 +68,8 @@ let oldCompareResult: boolean[] = [];
     export function readLeftMotorCurrentValue(): number {
         let highByte: number;
         let lowByte: number;
-        highByte = sumobit.i2cRead(REG_ADD_AN2_HIGH);
-        lowByte = sumobit.i2cRead(REG_ADD_AN2_LOW);
+        highByte = sumobit.i2cRead(SUMOBIT_REG_ADD_AN2_HIGH);
+        lowByte = sumobit.i2cRead(SUMOBIT_REG_ADD_AN2_LOW);
         return ((highByte << 8) | lowByte) / 100;
     }
 

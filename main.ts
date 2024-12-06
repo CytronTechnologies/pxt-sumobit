@@ -6,43 +6,43 @@
 const SUMOBIT_I2C_ADDRESS = 0x09;
 
 // I2C register addresses
-const REG_ADD_REVISION = 0;
-const REG_ADD_SRV1_POS = 1;
-const REG_ADD_SRV1_SPEED = 2;
-const REG_ADD_SRV2_POS = 3;
-const REG_ADD_SRV2_SPEED = 4;
-const REG_SERVO_R1 = 5;
-const REG_SERVO_R2 = 6;
-const REG_SERVO_R3 = 7;
-const REG_SERVO_R4 = 8;
-const REG_ADD_PWM1 = 9;
-const REG_ADD_DIR1 = 10;
-const REG_ADD_ACCEL1 = 11;
-const REG_ADD_PWM2 = 12;
-const REG_ADD_DIR2 = 13;
-const REG_ADD_ACCEL2 = 14;
-const REG_MOTOR_R1 = 15;
-const REG_MOTOR_R2 = 16;
-const REG_MOTOR_R3 = 17;
-const REG_MOTOR_R4 = 18;
-const REG_ADD_R0 = 19;
-const REG_ADD_G0 = 20;
-const REG_ADD_B0 = 21;
-const REG_ADD_R1 = 22;
-const REG_ADD_G1 = 23;
-const REG_ADD_B1 = 24;
-const REG_ADD_AN1_HIGH = 25;
-const REG_ADD_AN1_LOW = 26;
-const REG_ADD_AN2_HIGH = 27;
-const REG_ADD_AN2_LOW = 28;
-const REG_CURRENT_R1 = 29;
-const REG_CURRENT_R2 = 30;
-const REG_ADD_VIN_HIGH = 31;
-const REG_ADD_VIN_LOW = 32;
-const REG_VIN_R1 = 33;
-const REG_VIN_R2 = 34;
-const REG_ADD_DIP = 35;
-const REG_ADD_RESET = 36;
+const SUMOBIT_REG_ADD_REVISION = 0;
+const SUMOBIT_REG_ADD_SRV1_POS = 1;
+const SUMOBIT_REG_ADD_SRV1_SPEED = 2;
+const SUMOBIT_REG_ADD_SRV2_POS = 3;
+const SUMOBIT_REG_ADD_SRV2_SPEED = 4;
+const SUMOBIT_REG_SERVO_R1 = 5;
+const SUMOBIT_REG_SERVO_R2 = 6;
+const SUMOBIT_REG_SERVO_R3 = 7;
+const SUMOBIT_REG_SERVO_R4 = 8;
+const SUMOBIT_REG_ADD_PWM1 = 9;
+const SUMOBIT_REG_ADD_DIR1 = 10;
+const SUMOBIT_REG_ADD_ACCEL1 = 11;
+const SUMOBIT_REG_ADD_PWM2 = 12;
+const SUMOBIT_REG_ADD_DIR2 = 13;
+const SUMOBIT_REG_ADD_ACCEL2 = 14;
+const SUMOBIT_REG_MOTOR_R1 = 15;
+const SUMOBIT_REG_MOTOR_R2 = 16;
+const SUMOBIT_REG_MOTOR_R3 = 17;
+const SUMOBIT_REG_MOTOR_R4 = 18;
+const SUMOBIT_REG_ADD_R0 = 19;
+const SUMOBIT_REG_ADD_G0 = 20;
+const SUMOBIT_REG_ADD_B0 = 21;
+const SUMOBIT_REG_ADD_R1 = 22;
+const SUMOBIT_REG_ADD_G1 = 23;
+const SUMOBIT_REG_ADD_B1 = 24;
+const SUMOBIT_REG_ADD_AN1_HIGH = 25;
+const SUMOBIT_REG_ADD_AN1_LOW = 26;
+const SUMOBIT_REG_ADD_AN2_HIGH = 27;
+const SUMOBIT_REG_ADD_AN2_LOW = 28;
+const SUMOBIT_REG_CURRENT_R1 = 29;
+const SUMOBIT_REG_CURRENT_R2 = 30;
+const SUMOBIT_REG_ADD_VIN_HIGH = 31;
+const SUMOBIT_REG_ADD_VIN_LOW = 32;
+const SUMOBIT_REG_VIN_R1 = 33;
+const SUMOBIT_REG_VIN_R2 = 34;
+const SUMOBIT_REG_ADD_DIP = 35;
+const SUMOBIT_REG_ADD_RESET = 36;
 
 /**
 * Blocks for SUMO:BIT.
@@ -54,8 +54,8 @@ namespace sumobit {
 
     
     // Stop all motor initially
-    sumobit.i2cWrite(REG_ADD_PWM1, 0);
-    sumobit.i2cWrite(REG_ADD_PWM2, 0);
+    sumobit.i2cWrite(SUMOBIT_REG_ADD_PWM1, 0);
+    sumobit.i2cWrite(SUMOBIT_REG_ADD_PWM2, 0);
 
     // Disable the servos initially
     sumobit.i2cWrite(SumobitServoChannel.Servo1, 0);
