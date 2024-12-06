@@ -1,6 +1,6 @@
 {
     "name": "pxt-sumobit",
-    "version": "1.3.3",
+    "version": "1.3.4",
     "description": "MakeCode Extension for Cytron SUMO:BIT",
     "license": "MIT",
     "dependencies": {
