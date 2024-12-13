@@ -38,15 +38,15 @@ namespace sumobit{
 
         switch (servo) {
             case SumobitServoChannel.Servo1:
-                setServoPosition(1, 0, 9);
+                setServoPosition(1, 0, 5);
                 break;
 
             case SumobitServoChannel.Servo2:
-                setServoPosition(2, 0, 9);
+                setServoPosition(2, 0, 5);
                 break;
 
             case SumobitServoChannel.All:
-                setServoPosition(1000, 0, 9);
+                setServoPosition(1000, 0, 5);
                 break;
         }
     }
